@@ -10,7 +10,7 @@ npm run dev
 npm run build
 ```
 
-The production build is written to `dist/`. Cloudflare Pages should use `npm run build` and `dist`, with Node 22 or newer.
+The production build is written to `dist/`. Use Node 22.12 or newer.
 
 ## Content and settings
 
@@ -25,23 +25,27 @@ Work, Notes, and Photos schemas live in `src/content.config.ts`. Draft entries a
 
 ## Contact form
 
-The Cloudflare Pages Function at `functions/api/contact.ts` sends mail through Resend. Add these encrypted environment variables in Cloudflare Pages:
-
-- `CONTACT_EMAIL`
-- `RESEND_API_KEY`
-- `CONTACT_FROM_EMAIL`
-- `TURNSTILE_SECRET_KEY` (optional)
-
-The recipient address is never included in public source.
+The launch contact form uses a `mailto:` action to open the visitor’s default email app and address the message to the Office Hours mailbox. It does not require server-side email secrets or a Cloudflare Pages Function.
 
 ## Launch assets still requiring owner input
 
 1. Add the approved PDF résumé under `public/resume/`, then set `resumePath` in `src/data/site.ts`.
 2. Set the Cloudflare Web Analytics token in `src/data/site.ts`.
-3. Add a verified email provider/domain and the contact secrets above.
-4. Connect the Cloudflare Pages project to the production Git repository and attach the apex and `www` domains.
-5. Add original photographs only; the current Photography page intentionally publishes no stock or placeholder images.
+3. Connect the Cloudflare project to the production Git repository and attach the apex and `www` domains.
+4. Add original photographs only; the current Photography page intentionally publishes no stock or placeholder images.
+
+## Cloudflare deployment
+
+This repository builds to a static `dist/` folder.
+
+If deploying as Cloudflare Pages:
+
+- Build command: `pnpm run build`
+- Output directory: `dist`
+- Deploy command: leave blank
+
+If deploying through Workers with `npx wrangler deploy`, `wrangler.toml` serves the generated `dist/` directory as static assets.
 
 ## Deployment checks
 
-Run `npm run build`, preview `dist/`, test the form against the deployed Pages Function, check all external links, and run Lighthouse on the homepage plus one content page at desktop and mobile sizes.
+Run `npm run build`, preview `dist/`, test the mailto form behavior, check all external links, and run Lighthouse on the homepage plus one content page at desktop and mobile sizes.
