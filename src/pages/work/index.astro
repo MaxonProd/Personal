@@ -1,0 +1,55 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import WorkCard from '../../components/WorkCard.astro';
+import { getCollection } from 'astro:content';
+
+const items = (await getCollection('work', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const categories = ['All', ...new Set(items.map((item) => item.data.category))];
+const showFilters = items.length >= 4 && categories.length > 2;
+---
+
+<ContentLayout title="Work & Publications" eyebrow="Selected work" description="Professional, academic, written, and entrepreneurial work presented as it is completed and ready to share.">
+  <section class="section">
+    <div class="container">
+      {showFilters && (
+        <div class="filters" role="group" aria-label="Filter work by category">
+          {categories.map((category, index) => <button type="button" class:list={[index === 0 && 'active']} data-filter={category} aria-pressed={index === 0 ? 'true' : 'false'}>{category}</button>)}
+        </div>
+      )}
+      <p class="result-count" aria-live="polite" data-count>{items.length} {items.length === 1 ? 'item' : 'items'}</p>
+      <div class="work-list" data-list>{items.map((item) => <div data-category={item.data.category}><WorkCard slug={item.id} {...item.data} /></div>)}</div>
+    </div>
+  </section>
+</ContentLayout>
+
+{showFilters && (
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const cards = document.querySelectorAll<HTMLElement>('[data-category]');
+    const count = document.querySelector('[data-count]');
+    buttons.forEach((button) => button.addEventListener('click', () => {
+      const value = button.dataset.filter;
+      let visible = 0;
+      buttons.forEach((filterButton) => {
+        const active = filterButton === button;
+        filterButton.classList.toggle('active', active);
+        filterButton.setAttribute('aria-pressed', String(active));
+      });
+      cards.forEach((card) => {
+        const show = value === 'All' || card.dataset.category === value;
+        card.hidden = !show;
+        if (show) visible++;
+      });
+      if (count) count.textContent = `${visible} ${visible === 1 ? 'item' : 'items'}`;
+    }));
+  </script>
+)}
+
+<style>
+  .filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+  .filters button{padding:.55rem .9rem;border:1px solid var(--line);background:transparent;font-size:.75rem;font-weight:700;cursor:pointer}
+  .filters button:hover,.filters button.active{color:var(--white);background:var(--ink)}
+  .result-count{margin-bottom:2rem;color:var(--ink-soft);font-size:.8rem}
+  .work-list{display:grid;grid-template-columns:1fr;gap:1.5rem}
+  .work-list :global(.work-card){min-width:0;max-width:850px}
+</style>

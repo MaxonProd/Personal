@@ -1,0 +1,40 @@
+---
+import ContentLayout from '../layouts/ContentLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { socialLinks } from '../data/socialLinks';
+---
+
+<ContentLayout title="Connect with Timothy" eyebrow="Contact" description="For professional, academic, media, venture, or community inquiries, use the form below or connect through a public profile.">
+  <section class="section">
+    <div class="container contact-grid">
+      <aside>
+        <p class="eyebrow">Elsewhere</p>
+        <h2>Public profiles.</h2>
+        <div class="links">
+          {socialLinks.map((link) => (
+            <a href={link.href} target="_blank" rel="me noopener noreferrer">
+              <span>{link.label}</span>
+              <span aria-hidden="true">↗</span>
+              <span class="sr-only">opens in a new tab</span>
+            </a>
+          ))}
+        </div>
+        <p class="note">A personal phone number or home address is not published on this site. The contact form opens the visitor’s default email app.</p>
+      </aside>
+      <div>
+        <p class="eyebrow">Send a message</p>
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</ContentLayout>
+
+<style>
+  .contact-grid{display:grid;grid-template-columns:.65fr 1.35fr;gap:clamp(3rem,8vw,8rem)}
+  aside h2{font-size:clamp(2rem,3.5vw,3rem)}
+  .links{margin-top:2rem;border-top:1px solid var(--line)}
+  .links a{display:flex;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line);font-weight:700;text-decoration:none}
+  .links a span:nth-child(2){color:var(--bronze)}
+  .note{margin-top:2rem;color:var(--ink-soft);font-size:.8rem}
+  @media(max-width:760px){.contact-grid{grid-template-columns:1fr}}
+</style>

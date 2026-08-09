@@ -1,0 +1,4 @@
+---
+const {message,href}=Astro.props;
+---
+<aside class="campaign-banner"><p>{message}</p>{href&&<a href={href}>Learn more</a>}</aside>

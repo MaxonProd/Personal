@@ -1,0 +1,53 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  date: Date;
+  image?: string;
+  organization?: string;
+  featured?: boolean;
+}
+
+const { slug, title, description, category, date, image, organization, featured = false } = Astro.props;
+---
+
+<article class:list={['work-card', featured && 'featured']}>
+  <a class:list={['cover', image && 'cover--image']} href={`/work/${slug}/`} aria-label={`Read about ${title}`}>
+    {image ? <img src={image} alt={`Cover of ${title}`} loading="lazy" decoding="async" /> : (
+      <>
+        <span class="cover-kicker">A leadership case study</span>
+        <strong>{title}</strong>
+        <span class="cover-rule"></span>
+        <small>Timothy Maxon</small>
+      </>
+    )}
+  </a>
+  <div class="work-copy">
+    <div class="meta"><span>{category}</span><time datetime={date.toISOString()}>{date.getFullYear()}</time></div>
+    <h3><a href={`/work/${slug}/`}>{title}</a></h3>
+    <p>{description}</p>
+    {organization && <span class="organization">{organization}</span>}
+    <a class="text-link text-link--internal" href={`/work/${slug}/`}>View work</a>
+  </div>
+</article>
+
+<style>
+  .work-card{display:grid;grid-template-columns:minmax(180px,.72fr) 1.3fr;gap:clamp(1.5rem,3vw,2.5rem);min-width:min(82vw,720px);padding:1.25rem;border:1px solid var(--line);background:var(--paper-raised)}
+  .cover{aspect-ratio:3/4;display:flex;padding:1.4rem;flex-direction:column;color:#eef6f8;background:linear-gradient(155deg,#244c65,#152633);text-decoration:none;box-shadow:0 13px 30px rgba(24,35,45,.22)}
+  .cover--image{padding:0;overflow:hidden;background:#152633}
+  .cover img{width:100%;height:100%;object-fit:cover}
+  .cover-kicker{font-size:.61rem;letter-spacing:.12em;text-transform:uppercase}
+  .cover strong{margin:auto 0;font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.3rem);font-weight:500;line-height:.98}
+  .cover-rule{width:42px;height:2px;margin-bottom:.8rem;background:#8cc7d3}
+  .cover small{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase}
+  .work-copy{align-self:center}
+  .meta{display:flex;gap:1rem;color:var(--bronze-dark);font-size:.7rem;font-weight:750;letter-spacing:.1em;text-transform:uppercase}
+  .work-copy h3{margin:.8rem 0}
+  .work-copy h3 a{text-decoration:none}
+  .work-copy p{color:var(--ink-soft)}
+  .organization{display:block;margin-top:1rem;color:var(--ink-soft);font-size:.78rem}
+  .text-link{margin-top:1.5rem}
+  @media(max-width:600px){.work-card{grid-template-columns:1fr;min-width:86vw}.cover{width:min(70%,240px)}.work-copy{padding:.25rem}}
+</style>

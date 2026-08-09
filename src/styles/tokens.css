@@ -1,0 +1,21 @@
+:root {
+  --paper: #f6f7f5;
+  --paper-soft: #e8edf0;
+  --paper-raised: #ffffff;
+  --ink: #18222d;
+  --ink-soft: #586675;
+  --line: #ccd6dd;
+  --bronze: #2f6f7e;
+  --bronze-dark: #1f5360;
+  --forest: #365446;
+  --blue: #244c65;
+  --copper: #9b6b55;
+  --mist: #eef3f5;
+  --white: #fff;
+  --shadow: 0 22px 70px rgba(22, 34, 45, 0.12);
+  --serif: Charter, Georgia, 'Times New Roman', serif;
+  --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+  --max: 1180px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --section: clamp(4.5rem, 9vw, 8rem);
+}

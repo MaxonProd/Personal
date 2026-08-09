@@ -1,0 +1,110 @@
+---
+const recipient = 'officehourstm@gmail.com';
+---
+
+<form class="contact-form" action={`mailto:${recipient}`} method="post" data-contact-form novalidate>
+  <input type="hidden" name="startedAt" value="" data-started-at />
+
+  <div class="honeypot" aria-hidden="true">
+    <label>Leave this field empty <input name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="field-row">
+    <label>Name <input name="name" type="text" autocomplete="name" required minlength="2" maxlength="100" /></label>
+    <label>Email <input name="email" type="email" autocomplete="email" required maxlength="254" /></label>
+  </div>
+
+  <label>Organization <input name="organization" type="text" autocomplete="organization" maxlength="120" /><span>Optional</span></label>
+
+  <label>
+    Subject
+    <select name="subject" required>
+      <option value="">Choose a subject</option>
+      <option>Professional connection</option>
+      <option>Academic or research</option>
+      <option>Media or speaking</option>
+      <option>Ventures</option>
+      <option>Community or public service</option>
+      <option>Other</option>
+    </select>
+  </label>
+
+  <label>Message <textarea name="message" rows="7" required minlength="20" maxlength="5000"></textarea><span>20–5,000 characters</span></label>
+
+  <div class="form-bottom">
+    <button type="submit">Open email app <span aria-hidden="true">→</span></button>
+    <p>This form opens your default email app addressed to Office Hours.</p>
+  </div>
+
+  <p class="form-status" role="status" aria-live="polite" data-status></p>
+
+  <noscript>
+    <p class="no-script">JavaScript is disabled. Email <a href={`mailto:${recipient}`}>{recipient}</a> directly.</p>
+  </noscript>
+</form>
+
+<script>
+  const recipient = 'officehourstm@gmail.com';
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const status = form?.querySelector<HTMLElement>('[data-status]');
+  const started = form?.querySelector<HTMLInputElement>('[data-started-at]');
+  if (started) started.value = String(Date.now());
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const formData = new FormData(form);
+    if (String(formData.get('website') ?? '').trim()) {
+      if (status) status.textContent = 'Thank you.';
+      return;
+    }
+
+    const startedAt = Number(formData.get('startedAt'));
+    if (!startedAt || Date.now() - startedAt < 1500) {
+      if (status) status.textContent = 'Please wait a moment and try again.';
+      return;
+    }
+
+    const name = String(formData.get('name') ?? '').trim();
+    const email = String(formData.get('email') ?? '').trim();
+    const organization = String(formData.get('organization') ?? '').trim();
+    const subject = String(formData.get('subject') ?? '').trim();
+    const message = String(formData.get('message') ?? '').trim();
+
+    const emailSubject = `Website inquiry: ${subject}`;
+    const emailBody = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Organization: ${organization || 'Not provided'}`,
+      `Subject: ${subject}`,
+      '',
+      message
+    ].join('\n');
+
+    const mailto = `mailto:${recipient}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+    if (status) status.textContent = 'Opening your email app…';
+    window.location.href = mailto;
+  });
+</script>
+
+<style>
+  .contact-form{position:relative}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .contact-form>label,.field-row label{position:relative;display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.15rem;font-size:.78rem;font-weight:750;letter-spacing:.04em;text-transform:uppercase}
+  .contact-form label span{position:absolute;top:0;right:0;color:var(--ink-soft);font-size:.65rem;font-weight:500;text-transform:none}
+  .contact-form input,.contact-form select,.contact-form textarea{width:100%;padding:.85rem .9rem;border:1px solid var(--line);border-radius:0;color:var(--ink);background:var(--paper-raised);font-size:1rem;letter-spacing:0;text-transform:none}
+  .contact-form textarea{resize:vertical}
+  .contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{border-color:var(--bronze);outline:3px solid color-mix(in srgb,var(--bronze) 25%,transparent);outline-offset:0}
+  .form-bottom{display:flex;align-items:center;gap:1.5rem}
+  .form-bottom button{min-height:50px;padding:.75rem 1.3rem;border:1px solid var(--ink);color:var(--paper);background:var(--ink);font-weight:750;cursor:pointer}
+  .form-bottom button:hover{background:var(--forest)}
+  .form-bottom p,.no-script{color:var(--ink-soft);font-size:.76rem}
+  .form-status{min-height:1.65rem;margin-top:1rem;font-weight:700}
+  .honeypot{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+  @media(max-width:600px){.field-row{grid-template-columns:1fr}.form-bottom{align-items:start;flex-direction:column}}
+</style>

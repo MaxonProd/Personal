@@ -1,0 +1,4 @@
+---
+const {title,body,href}=Astro.props;
+---
+<section class="campaign-announcement" aria-labelledby="campaign-announcement-title"><h2 id="campaign-announcement-title">{title}</h2><p>{body}</p>{href&&<a href={href}>Learn more</a>}</section>

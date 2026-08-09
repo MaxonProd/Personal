@@ -1,0 +1,141 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import PhotographyGrid from '../../components/PhotographyGrid.astro';
+import PhotoLightbox from '../../components/PhotoLightbox.astro';
+
+const photos = [
+  {
+    src: '/images/photography/ice-sunrise-panorama.jpg',
+    title: 'Ice Storm Sunset',
+    alt: 'A low sunset shining over ice-covered trees and ground after a severe ice storm.',
+    caption: 'Sunset during the two-week power outage following the 2025 Alpena ice storm.',
+    category: 'Northern Michigan',
+    location: 'Alpena, Michigan',
+    orientation: 'wide'
+  },
+  {
+    src: '/images/photography/northern-lights-tree.jpg',
+    title: 'Northern Lights',
+    alt: 'Green aurora and stars over silhouetted trees.',
+    caption: 'Aurora color over a quiet night sky.',
+    category: 'Night Sky',
+    location: 'Michigan',
+    orientation: 'wide'
+  },
+  {
+    src: '/images/photography/bus-window-reflection.jpg',
+    title: 'Bus Window Reflection',
+    alt: 'A flag and bright sun reflected in the window of a bus.',
+    caption: 'The sun and flag reflected through a bus window, turning an ordinary surface into a layered image.',
+    category: 'Everyday',
+    orientation: 'square'
+  },
+  {
+    src: '/images/photography/upper-peninsula-waterfall.jpg',
+    title: 'Falling Water',
+    alt: 'A waterfall dropping through layered rock into a foaming stream.',
+    caption: 'Rock, water, and motion in the Upper Peninsula.',
+    category: 'Northern Michigan',
+    location: 'Upper Peninsula, Michigan',
+    orientation: 'wide'
+  },
+  {
+    src: '/images/photography/red-rock-overlook.jpg',
+    title: 'Red Rock Overlook',
+    alt: 'Sun setting over a broad red rock desert landscape.',
+    caption: 'Late light over sandstone and desert scrub.',
+    category: 'Travel',
+    location: 'Nevada',
+    orientation: 'wide'
+  },
+  {
+    src: '/images/photography/red-rock-passage.jpg',
+    title: 'Stone Passage',
+    alt: 'Red sandstone formations framing distant mountains under a blue sky.',
+    caption: 'A quieter view through red rock formations.',
+    category: 'Travel',
+    location: 'Nevada',
+    orientation: 'tall'
+  },
+  {
+    src: '/images/photography/canyon-walls.jpg',
+    title: 'Canyon Walls',
+    alt: 'Tall red canyon walls rising above green trees.',
+    caption: 'Scale, shade, and warm rock in a canyon corridor.',
+    category: 'Travel',
+    orientation: 'wide'
+  },
+  {
+    src: '/images/photography/window-light-dog.jpg',
+    title: 'Window Light',
+    alt: 'A dog resting near a bright window in strong side light.',
+    caption: 'An everyday portrait shaped by hard afternoon light.',
+    category: 'Everyday',
+    orientation: 'wide'
+  },
+  {
+    src: '/images/photography/red-rose-close.jpg',
+    title: 'Red Rose',
+    alt: 'A red rose partly hidden among green leaves.',
+    caption: 'A close study of color, leaves, and shallow focus.',
+    category: 'Nature',
+    orientation: 'wide'
+  },
+  {
+    src: '/images/photography/field-object-study.jpg',
+    title: 'Field Study',
+    alt: 'A vintage rifle leaning against textured rock outdoors.',
+    caption: 'A vintage rifle photographed against stone and spring grass.',
+    category: 'Field & Range',
+    orientation: 'tall'
+  }
+] as const;
+
+const categories = [...new Set(photos.map((photo) => photo.category))];
+---
+
+<ContentLayout title="Photography" eyebrow="A returning practice" description="Photography was an early interest and is now becoming an active hobby again. This collection documents northern landscapes, night skies, travel, natural details, and everyday places worth remembering.">
+  <div class="container parent-link">
+    <a href="/beyond/">← Back to Beyond</a>
+  </div>
+
+  <section class="section intro-band">
+    <div class="container intro-grid">
+      <div>
+        <p class="eyebrow">Selected photographs</p>
+        <h2>A small launch collection.</h2>
+      </div>
+      <div>
+        <p class="lede">This is presented as personal photography, not commercial photography. The collection can grow naturally as more original work is ready to share.</p>
+        <ul>{categories.map((category) => <li>{category}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <PhotographyGrid photos={photos} />
+      <PhotoLightbox />
+    </div>
+  </section>
+
+  <section class="section--tight metadata">
+    <div class="container">
+      <p>Future photographs can include date, location, camera and lens metadata, and optional EXIF details when that context adds value.</p>
+    </div>
+  </section>
+</ContentLayout>
+
+<style>
+  .intro-band{border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--paper-raised),var(--paper))}
+  .parent-link{padding-top:1.25rem}
+  .parent-link a{color:var(--ink-soft);font-size:.86rem;font-weight:700;text-decoration:none}
+  .parent-link a:hover{color:var(--ink)}
+  .intro-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(2rem,6vw,6rem);align-items:start}
+  .intro-grid .lede{margin-bottom:1.5rem}
+  ul{display:flex;flex-wrap:wrap;gap:.6rem;margin:0;padding:0;list-style:none}
+  li{padding:.4rem .7rem;border:1px solid var(--line);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:rgba(255,255,255,.55)}
+  .metadata{border-top:1px solid var(--line);background:var(--paper-soft)}
+  .metadata p{max-width:720px;color:var(--ink-soft)}
+  @media(max-width:760px){.intro-grid{grid-template-columns:1fr}}
+</style>

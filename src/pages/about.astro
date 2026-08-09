@@ -1,0 +1,99 @@
+---
+import ContentLayout from '../layouts/ContentLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+import { site } from '../data/site';
+
+const chapters = [
+  {
+    n: '01',
+    title: 'Northern Michigan roots',
+    copy: 'My connection to Michigan runs through the Upper Peninsula, Munising, Hubbard Lake, and Alpena County. The region’s distances, seasons, small communities, and working landscapes have shaped how I think about institutions: they matter most when they are useful, dependable, and close to the people they serve.'
+  },
+  {
+    n: '02',
+    title: 'Military and public service',
+    copy: 'My professional foundation includes service in the United States Air Force and Michigan Air National Guard, followed by federal civilian human-resources work. Those settings taught me the value of clear processes, responsible stewardship, and the quiet administrative work that allows larger missions to succeed.'
+  },
+  {
+    n: '03',
+    title: 'Human resources',
+    copy: 'I have worked across recruitment and staffing, workforce planning, employee relations, organizational processes, HR systems, and process improvement. I see human resources as both a people function and a systems discipline: good outcomes require attention to individual experience and organizational design.'
+  },
+  {
+    n: '04',
+    title: 'Education and teaching',
+    copy: 'As a DBA candidate and business professor, I work at the point where practical experience meets structured inquiry. Teaching, mentoring, and applied research allow me to help students translate concepts into decisions they can use in real organizations.'
+  },
+  {
+    n: '05',
+    title: 'Entrepreneurship',
+    copy: 'Maxon Products, Citadel Wireless, and Fullrange Supply grew from the same practical impulse: identify a real need, understand the operating system around it, and build carefully. Entrepreneurship is not separate from my other work; it is another way to test ideas and make them useful.'
+  }
+];
+---
+
+<ContentLayout title="A practical path through people, systems, and service." eyebrow="About Timothy" description="My work has moved across military and public service, human resources, higher education, research, and entrepreneurship. The settings differ, but the questions are consistent: What do people need to do good work? What makes an organization useful? How can an idea become something durable?">
+  <section class="section">
+    <div class="container story">
+      {chapters.map((chapter) => (
+        <article>
+          <div>
+            <span>{chapter.n}</span>
+            <h2>{chapter.title}</h2>
+          </div>
+          <p>{chapter.copy}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section dark-panel">
+    <div class="container interests">
+      <SectionHeading eyebrow="Beyond the work" title="Place, curiosity, and the long view." />
+      <div class="grid grid--3">
+        <div>
+          <h3><a href="/beyond/photography/">Photography</a></h3>
+          <p>Returning to an early interest through northern landscapes, wildlife, night skies, and everyday places.</p>
+        </div>
+        <div>
+          <h3>Technology & local business</h3>
+          <p>Interested in the tools and operating models that can strengthen rural economies and small organizations.</p>
+        </div>
+        <div>
+          <h3>History & public life</h3>
+          <p>Drawn to the way institutions, policy, and local decisions shape communities over time.</p>
+        </div>
+      </div>
+      <a class="text-link text-link--internal" href="/beyond/">Explore Beyond</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container closing">
+      <h2>Continue the conversation.</h2>
+      <div>
+        <Button href="https://www.linkedin.com/in/timothymaxon/" external>View LinkedIn</Button>
+        {site.resumePath && <Button href={site.resumePath} variant="secondary">Download Résumé</Button>}
+        <Button href="/contact/" variant="ghost">Contact Timothy</Button>
+      </div>
+    </div>
+  </section>
+</ContentLayout>
+
+<style>
+  .story{max-width:980px}
+  .story article{display:grid;grid-template-columns:1fr 1.25fr;gap:clamp(2rem,6vw,6rem);padding:clamp(3rem,6vw,5.5rem) 0;border-top:1px solid var(--line)}
+  .story article:first-child{padding-top:0;border-top:0}
+  .story span{color:var(--bronze-dark);font-size:.72rem;font-weight:750}
+  .story h2{margin-top:1.5rem;font-size:clamp(2rem,4vw,3.5rem)}
+  .story article>p{color:var(--ink-soft);font-size:clamp(1.05rem,1.5vw,1.2rem)}
+  .interests .grid>div{padding-top:1.5rem;border-top:1px solid #515551}
+  .interests h3{margin-bottom:1rem}
+  .interests h3 a{text-decoration:none}
+  .interests p{color:#bcc2bc}
+  .interests .text-link{margin-top:2rem;color:#eef6f8}
+  .closing{display:flex;align-items:center;justify-content:space-between;gap:2rem}
+  .closing>div{display:flex;flex-wrap:wrap;gap:.75rem}
+  @media(max-width:720px){.story article{grid-template-columns:1fr}.closing{align-items:start;flex-direction:column}}
+</style>

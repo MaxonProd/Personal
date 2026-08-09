@@ -1,0 +1,4 @@
+---
+const {title,date,location,href}=Astro.props;
+---
+<article class="event-card"><time datetime={date}>{date}</time><h3>{title}</h3><p>{location}</p>{href&&<a href={href}>Event details</a>}</article>

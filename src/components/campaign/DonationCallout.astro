@@ -1,0 +1,4 @@
+---
+const {title='Support the campaign',href}=Astro.props;
+---
+<aside class="donation-callout"><h2>{title}</h2>{href&&<a href={href}>Contribute</a>}</aside>

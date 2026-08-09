@@ -1,0 +1,25 @@
+{
+  "name": "timothy-maxon-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "dev:local": "astro dev --host 127.0.0.1 --port 4322",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "preview:local": "astro preview --host 127.0.0.1 --port 4322",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.0.6"
+  },
+  "devDependencies": {
+    "@astrojs/check": "latest",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

@@ -1,0 +1,113 @@
+---
+import ContentLayout from '../layouts/ContentLayout.astro';
+import Button from '../components/Button.astro';
+
+const values = [
+  ['Practical problem-solving', 'Begin with the conditions people actually face, then make the path forward understandable and workable.'],
+  ['Ethical leadership', 'Use authority carefully, communicate honestly, and treat public trust as something earned through conduct.'],
+  ['Accountability', 'Set clear expectations, measure what matters, and own both decisions and their consequences.'],
+  ['Responsible stewardship', 'Use time, money, attention, and institutional capacity with care.'],
+  ['Accessible education', 'Make useful learning available to people whose routes through education may not be traditional.'],
+  ['Strong local institutions', 'Build the organizations that help communities remain capable, connected, and resilient.']
+];
+
+const servicePhotos = [
+  {
+    src: '/images/service/service-recognition.jpg',
+    alt: 'Timothy Maxon in uniform receiving promotion recognition during Air Force service.',
+    caption: 'Promotion recognition during Air Force service.'
+  },
+  {
+    src: '/images/service/air-force-formal-portrait.jpg',
+    alt: 'Formal Air Force portrait of Timothy Maxon in uniform.',
+    caption: 'Formal portrait from Air Force service.'
+  }
+];
+---
+
+<ContentLayout title="Public Service" eyebrow="A record of service" description="My background in military service, federal work, education, and community life informs an interest in practical, responsible public leadership.">
+  <section class="section service-archive">
+    <div class="container archive-grid">
+      <div>
+        <p class="eyebrow">Service archive</p>
+        <h2>Selected records from early service.</h2>
+        <p class="lede">These photographs document moments from Air Force service and early public-sector work, including promotion recognition and a formal service portrait.</p>
+      </div>
+      <div class="photo-pair">
+        {servicePhotos.map((photo) => (
+          <figure>
+            <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+            <figcaption>{photo.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container service-sections">
+      <article>
+        <p class="eyebrow">01 / Service background</p>
+        <h2>Mission depends on the systems behind it.</h2>
+        <p>My service includes the United States Air Force, the Michigan Air National Guard, and federal civilian human-resources work. Administrative and organizational roles showed me how much public outcomes depend on dependable processes, good judgment, and people who take responsibility for the details.</p>
+      </article>
+      <article>
+        <p class="eyebrow">02 / Education as service</p>
+        <h2>Practical learning expands opportunity.</h2>
+        <p>Teaching and mentoring are forms of public contribution. I work to help students connect business concepts with the organizations, careers, and decisions in front of them, especially in learning environments designed to broaden access.</p>
+      </article>
+      <article>
+        <p class="eyebrow">03 / Community</p>
+        <h2>Capacity matters close to home.</h2>
+        <p>Northern Michigan and rural communities face questions of economic opportunity, communications resilience, education, and organizational capacity. Durable progress often begins with strong local institutions and people willing to do patient, practical work.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section dark-panel">
+    <div class="container">
+      <p class="eyebrow">Leadership perspective</p>
+      <h2>Principles before positions.</h2>
+      <div class="values">{values.map(([title, copy], index) => <article><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container next">
+      <div>
+        <p class="eyebrow">An open conversation</p>
+        <h2>Community is built in public.</h2>
+      </div>
+      <div>
+        <p class="lede">I welcome thoughtful connections around education, rural opportunity, organizational capacity, and public service.</p>
+        <Button href="/contact/" variant="secondary">Get in touch</Button>
+      </div>
+    </div>
+  </section>
+</ContentLayout>
+
+<style>
+  .service-archive{border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--paper-raised),var(--paper))}
+  .archive-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(3rem,7vw,7rem);align-items:end}
+  .archive-grid .lede{margin-top:1.5rem}
+  .photo-pair{display:grid;grid-template-columns:.9fr .72fr;gap:1rem;align-items:end}
+  figure{margin:0}
+  figure img{width:100%;height:100%;max-height:520px;object-fit:cover;filter:saturate(.85) contrast(1.03);box-shadow:var(--shadow)}
+  .photo-pair figure:first-child img{aspect-ratio:4/5;object-position:center top}
+  .photo-pair figure:last-child img{aspect-ratio:3/4;object-position:center top}
+  figcaption{margin-top:.75rem;color:var(--ink-soft);font-size:.78rem}
+  .service-sections{max-width:980px}
+  .service-sections article{display:grid;grid-template-columns:.8fr 1.2fr;gap:1rem 5rem;padding:clamp(3rem,6vw,5.5rem) 0;border-top:1px solid var(--line)}
+  .service-sections article:first-child{padding-top:0;border-top:0}
+  .service-sections h2{grid-column:1;font-size:clamp(2rem,3.5vw,3.2rem)}
+  .service-sections article>p:last-child{grid-column:2;grid-row:1/3;align-self:end;color:var(--ink-soft);font-size:1.1rem}
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3rem;border-top:1px solid rgba(255,255,255,.22)}
+  .values article{padding:2rem 2rem 2rem 0}
+  .values span{color:#9ed2dc;font-size:.7rem;font-weight:700}
+  .values h3{margin:2rem 0 1rem}
+  .values p{color:#c3d2d8}
+  .next{display:grid;grid-template-columns:1fr 1fr;gap:4rem}
+  .next .lede{margin-bottom:2rem}
+  @media(max-width:820px){.archive-grid,.service-sections article,.next{grid-template-columns:1fr}.service-sections article>p:last-child{grid-column:1;grid-row:auto}.values{grid-template-columns:1fr 1fr}}
+  @media(max-width:620px){.photo-pair{grid-template-columns:1fr}.values{grid-template-columns:1fr}}
+</style>

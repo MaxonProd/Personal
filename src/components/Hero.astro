@@ -1,0 +1,59 @@
+---
+import Button from './Button.astro';
+import { profile } from '../data/profile';
+import { socialLinks } from '../data/socialLinks';
+import { site } from '../data/site';
+---
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Northern Michigan / United States</p>
+      <h1><span>Timothy</span><span>Maxon</span></h1>
+      <p class="credentials">MBA <i>/</i> PHR <i>/</i> SSGB</p>
+      <p class="descriptor">{profile.descriptor}</p>
+      <p class="intro">{profile.introduction}</p>
+      <div class="actions">
+        <Button href="/work/">View Selected Work</Button>
+        <Button href="/ventures/" variant="secondary">Explore Ventures</Button>
+        <Button href="/about/" variant="ghost">Learn More</Button>
+      </div>
+      <div class="secondary">
+        {socialLinks.map((link) => <a href={link.href} target="_blank" rel="me noopener noreferrer">{link.label}</a>)}
+        {site.resumePath && <a href={site.resumePath}>Resume</a>}
+        <a href="/contact/">Contact</a>
+      </div>
+    </div>
+    <figure class="portrait">
+      <img src="/images/profile/timothy-maxon-headshot.png" alt="Portrait of Timothy Maxon" loading="eager" decoding="async" />
+      <figcaption>
+        <span>People</span>
+        <span>Organizations</span>
+        <span>Education</span>
+        <span>Practical work</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero{position:relative;padding-block:clamp(4rem,8vw,7rem);overflow:hidden}
+  .hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(280px,.62fr);gap:clamp(3rem,7vw,7rem);align-items:center}
+  .hero h1{display:flex;flex-direction:column;font-size:clamp(3.6rem,8vw,7.6rem)}
+  .hero h1 span:last-child{color:var(--blue)}
+  .credentials{margin:1rem 0 1.35rem;font-family:var(--serif);font-size:clamp(1.05rem,1.7vw,1.42rem);letter-spacing:.04em}
+  .credentials i{color:var(--bronze);font-style:normal}
+  .descriptor{max-width:720px;font-size:.78rem;font-weight:750;letter-spacing:.09em;text-transform:uppercase}
+  .intro{max-width:760px;margin-top:1.5rem;color:var(--ink-soft);font-size:clamp(1rem,1.45vw,1.16rem)}
+  .actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+  .secondary{display:flex;gap:1.3rem;margin-top:1.5rem}
+  .secondary a{color:var(--ink-soft);font-size:.8rem;font-weight:700}
+  .portrait{position:relative;margin:0;align-self:stretch;min-height:520px}
+  .portrait::before{content:'';position:absolute;inset:2rem -1.1rem -1.1rem 1.1rem;border:1px solid var(--line);background:var(--mist)}
+  .portrait img{position:relative;width:100%;height:100%;min-height:520px;object-fit:cover;object-position:center 22%;filter:saturate(.9) contrast(1.02);box-shadow:var(--shadow)}
+  .portrait figcaption{position:absolute;left:1rem;right:1rem;bottom:1rem;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.72)}
+  .portrait figcaption span{padding:.75rem .85rem;color:var(--ink);font-size:.68rem;font-weight:760;letter-spacing:.08em;text-transform:uppercase;background:rgba(246,247,245,.72)}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr}.portrait{min-height:420px;max-width:460px}.portrait img{min-height:420px}}
+  @media(max-width:480px){.actions{flex-direction:column;align-items:stretch}.secondary{flex-wrap:wrap}.portrait{min-height:360px}.portrait img{min-height:360px}.portrait figcaption{grid-template-columns:1fr 1fr}}
+</style>

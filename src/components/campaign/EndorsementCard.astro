@@ -1,0 +1,4 @@
+---
+const {name,role,quote}=Astro.props;
+---
+<figure class="endorsement-card"><blockquote>{quote}</blockquote><figcaption>{name}{role&&`, ${role}`}</figcaption></figure>

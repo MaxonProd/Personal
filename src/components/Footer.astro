@@ -1,0 +1,56 @@
+---
+import { socialLinks } from '../data/socialLinks';
+import { site } from '../data/site';
+
+const year = new Date().getFullYear();
+const ventureLinks = [
+  { label: 'Citadel Wireless', href: 'https://citadelwireless.com' },
+  { label: 'Maxon Products', href: 'https://maxonprod.com' },
+  { label: 'Fullrange Supply', href: 'https://fullrangesupply.com' }
+];
+---
+
+<footer class="footer">
+  <div class="container footer-main">
+    <div>
+      <p class="footer-name">Timothy Maxon</p>
+      <p class="muted">People, organizations, education, and practical work.</p>
+    </div>
+    <nav aria-label="Footer exploration navigation">
+      <p>Explore</p>
+      <a href="/about/">About</a>
+      <a href="/work/">Work</a>
+      <a href="/beyond/">Beyond</a>
+      <a href="/public-service/">Public Service</a>
+    </nav>
+    <nav aria-label="Footer project navigation">
+      <p>Projects</p>
+      <a href="/ventures/">Ventures</a>
+      {ventureLinks.map((link) => <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}<span class="sr-only"> (opens in a new tab)</span></a>)}
+    </nav>
+    <div class="social">
+      <p>Connect</p>
+      {socialLinks.map((link) => <a href={link.href} target="_blank" rel="me noopener noreferrer">{link.label}<span class="sr-only"> (opens in a new tab)</span></a>)}
+      <a href="/contact/">Contact</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© {year} Timothy Maxon</span>
+    <span>Northern Michigan</span>
+    <a href="/privacy/">Privacy</a>
+  </div>
+  {site.analytics.cloudflareToken && <script is:inline src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={`{"token":"${site.analytics.cloudflareToken}"}`} defer></script>}
+</footer>
+
+<style>
+  .footer{padding-top:4rem;border-top:1px solid var(--line)}
+  .footer-main{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:2rem;padding-bottom:3.5rem}
+  .footer-name{margin-bottom:.4rem;font-family:var(--serif);font-size:1.6rem}
+  nav,.social{display:flex;flex-direction:column;align-items:flex-start;gap:.55rem}
+  nav p,.social p{margin:0 0 .35rem;color:var(--ink);font-size:.72rem;font-weight:760;letter-spacing:.08em;text-transform:uppercase}
+  nav a,.social a{color:var(--ink-soft);font-size:.9rem;text-decoration:none}
+  .footer-bottom{display:flex;gap:1.5rem;padding-block:1.25rem;border-top:1px solid var(--line);color:var(--ink-soft);font-size:.78rem}
+  .footer-bottom a{margin-left:auto}
+  @media(max-width:860px){.footer-main{grid-template-columns:1fr 1fr}.footer-main>:first-child{grid-column:1/-1}}
+  @media(max-width:560px){.footer-main{grid-template-columns:1fr}.footer-bottom{flex-wrap:wrap}.footer-bottom a{margin-left:0}}
+</style>

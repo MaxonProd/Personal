@@ -1,0 +1,5 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';import Button from '../components/Button.astro';
+---
+<BaseLayout title="Page not found" description="The requested page could not be found." noindex><section class="not-found"><div class="container"><p class="eyebrow">404 · Page not found</p><h1>That path ends here.</h1><p class="lede">The page may have moved, or the address may be incomplete.</p><Button href="/">Return home</Button></div></section></BaseLayout>
+<style>.not-found{min-height:65vh;display:grid;place-items:center;padding-block:5rem}.not-found .lede{margin:1.5rem 0 2rem}</style>

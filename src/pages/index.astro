@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import WorkCarousel from '../components/WorkCarousel.astro';
+import VentureCard from '../components/VentureCard.astro';
+import Button from '../components/Button.astro';
+import { getCollection } from 'astro:content';
+import { profile } from '../data/profile';
+import { ventures } from '../data/ventures';
+
+const featured = (await getCollection('work', ({ data }) => !data.draft && data.featured)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const areas = [
+  ['Human Resources', 'Workforce systems, recruitment, employee relations, organizational processes, and public-sector HR experience.'],
+  ['Business Education', 'Teaching, mentoring, curriculum support, and practical business education.'],
+  ['Research & Writing', 'Doctoral research, applied business research, publications, and long-form writing.'],
+  ['Entrepreneurship', 'Business development, commercialization, brand creation, and founder-led projects.']
+];
+---
+
+<BaseLayout>
+  <Hero />
+
+  <section class="focus section--tight">
+    <div class="container focus-grid">
+      <div>
+        <p class="eyebrow">Current focus</p>
+        <h2>Work in progress.</h2>
+      </div>
+      <ol>{profile.focus.map((item, index) => <li><span>0{index + 1}</span>{item}</li>)}</ol>
+    </div>
+  </section>
+
+  {featured.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <SectionHeading eyebrow="Selected work" title="Ideas made useful." description="Research, writing, teaching, and business projects grounded in practical questions." linkHref="/work/" linkLabel="View all work" />
+        <WorkCarousel items={featured} />
+      </div>
+    </section>
+  )}
+
+  <section class="section areas">
+    <div class="container">
+      <SectionHeading eyebrow="Areas of work" title="One throughline, several settings." description="Building useful systems, developing people, teaching practical concepts, and creating organizations intended to serve real needs." />
+      <div class="area-grid">{areas.map(([title, copy], index) => <article><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+    </div>
+  </section>
+
+  <section class="section dark-panel">
+    <div class="container">
+      <SectionHeading eyebrow="Ventures" title="Practical ideas, built for use." description="Businesses developed around identifiable needs, clear operations, and long-term value." linkHref="/ventures/" linkLabel="Explore all ventures" />
+      <div class="grid grid--3">{ventures.map((venture) => <VentureCard {...venture} />)}</div>
+    </div>
+  </section>
+
+  <section class="section photo-preview">
+    <div class="container photo-grid">
+      <figure class="photo-art">
+        <img src="/images/photography/northern-lights-tree.jpg" alt="Northern lights and stars over silhouetted trees." loading="lazy" decoding="async" />
+        <figcaption>Northern lights over Michigan.</figcaption>
+      </figure>
+      <div>
+        <p class="eyebrow">Beyond the work</p>
+        <h2>Place, curiosity, and the long view.</h2>
+        <p class="lede">Beyond my professional work, I keep space for photography, local history, technology, northern Michigan, and the places and questions that continue to shape how I see institutions, communities, and everyday life.</p>
+        <div class="button-row">
+          <Button href="/beyond/" variant="ghost">Explore Beyond</Button>
+          <Button href="/beyond/photography/" variant="secondary">View Photography</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section service">
+    <div class="container service-grid">
+      <p class="eyebrow">Service, education, and community</p>
+      <div>
+        <h2>A record of showing up.</h2>
+        <p class="lede">Timothy's career has included military service, federal public service, higher education, and work focused on strengthening organizations and creating practical opportunities for others.</p>
+        <Button href="/public-service/" variant="secondary">Public Service</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section connect">
+    <div class="container">
+      <p class="eyebrow">Contact</p>
+      <h2>Connect with Timothy.</h2>
+      <div>
+        <a href="https://www.linkedin.com/in/timothymaxon/" target="_blank" rel="me noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://www.youtube.com/@OfficeHoursTM" target="_blank" rel="me noopener noreferrer">Office Hours ↗</a>
+        <a href="/contact/">Send a message →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .focus{border-block:1px solid var(--line);background:var(--paper-soft)}
+  .focus-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:3rem}
+  .focus h2{font-size:clamp(2rem,3vw,3rem)}
+  .focus ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 2rem}
+  .focus li{display:grid;grid-template-columns:2.5rem 1fr;padding:1rem 0;border-top:1px solid var(--line)}
+  .focus li span,.area-grid article>span{color:var(--bronze-dark);font-size:.72rem;font-weight:700}
+  .area-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+  .area-grid article{padding:2rem 1.5rem 0 0}
+  .area-grid h3{margin:2.8rem 0 1rem}
+  .area-grid p{color:var(--ink-soft)}
+  .dark-panel :global(.venture-card){color:var(--ink)}
+  .dark-panel :global(.heading>a){color:#eef6f8}
+  .photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem,7vw,8rem);align-items:center}
+  .photo-art{position:relative;margin:0;min-height:480px;overflow:hidden;background:#132432;box-shadow:var(--shadow)}
+  .photo-art img{width:100%;height:480px;object-fit:cover}
+  .photo-art figcaption{position:absolute;left:1rem;bottom:1rem;padding:.55rem .75rem;color:#eef6f8;background:#101820aa;font-size:.75rem;backdrop-filter:blur(10px)}
+  .photo-grid .lede{margin:1.5rem 0}
+  .button-row{display:flex;flex-wrap:wrap;gap:.75rem}
+  .service{border-top:1px solid var(--line)}
+  .service-grid{display:grid;grid-template-columns:.6fr 1.4fr;gap:3rem}
+  .service .lede{margin:1.5rem 0 2rem}
+  .connect{color:#eef6f8;background:var(--blue)}
+  .connect .eyebrow{color:#9ed2dc}
+  .connect .container{display:grid;grid-template-columns:.6fr 1.4fr;gap:2rem}
+  .connect h2{grid-column:2}
+  .connect .container>div{grid-column:2;display:flex;gap:2rem}
+  .connect a{font-weight:700;text-decoration:none}
+  @media(max-width:820px){.focus-grid,.photo-grid,.service-grid,.connect .container{grid-template-columns:1fr}.focus ol{grid-template-columns:1fr}.area-grid{grid-template-columns:1fr 1fr}.connect h2,.connect .container>div{grid-column:1}.connect .container>div{flex-wrap:wrap}.photo-art{min-height:350px}.photo-art img{height:350px}}
+  @media(max-width:520px){.area-grid{grid-template-columns:1fr}.photo-art{min-height:280px}.photo-art img{height:280px}}
+</style>

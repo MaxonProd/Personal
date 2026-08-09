@@ -1,0 +1,47 @@
+---
+interface Props {
+  name: string;
+  mark: string;
+  logo?: string;
+  industry: string;
+  description: string;
+  website: string;
+  status: string;
+  tone: string;
+}
+
+const { name, mark, logo, industry, description, website, status, tone } = Astro.props;
+---
+
+<article class:list={['venture-card', `venture-card--${tone}`]}>
+  <div class="venture-top">
+    {
+      logo
+        ? <img class="mark-image" src={logo} alt="" loading="lazy" decoding="async" />
+        : <span class="mark" aria-hidden="true">{mark}</span>
+    }
+    <span class="status">{status}</span>
+  </div>
+  <p class="industry">{industry}</p>
+  <h3>{name}</h3>
+  <p class="description">{description}</p>
+  <a class="text-link" href={website} target="_blank" rel="noopener noreferrer">
+    Visit {name}<span class="sr-only"> (opens in a new tab)</span>
+  </a>
+</article>
+
+<style>
+  .venture-card{display:flex;min-height:350px;padding:1.6rem;flex-direction:column;border:1px solid var(--line);background:rgba(255,255,255,.88);transition:transform .25s,box-shadow .25s,border-color .25s}
+  .venture-card:hover{transform:translateY(-4px);border-color:#9eb5c1;box-shadow:var(--shadow)}
+  .venture-top{display:flex;align-items:start;justify-content:space-between;gap:1rem;margin-bottom:auto}
+  .mark,.mark-image{display:grid;place-items:center;width:62px;height:62px;border:1px solid var(--line);background:#f8faf9}
+  .mark{color:var(--white);background:var(--blue);font-family:var(--serif);font-size:1.1rem}
+  .mark-image{padding:.55rem;object-fit:contain}
+  .venture-card--bronze .mark-image{padding:.2rem}
+  .venture-card--blue .mark-image{padding:.42rem}
+  .status{color:var(--ink-soft);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;text-align:right}
+  .industry{margin-top:2rem;color:var(--bronze-dark);font-size:.7rem;font-weight:750;letter-spacing:.09em;text-transform:uppercase}
+  .venture-card h3{margin-top:.55rem}
+  .description{margin:1rem 0 1.5rem;color:var(--ink-soft)}
+  .text-link{margin-top:auto}
+</style>

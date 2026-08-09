@@ -1,0 +1,74 @@
+---
+import ContentLayout from '../layouts/ContentLayout.astro';
+import Button from '../components/Button.astro';
+import { beyondItems } from '../data/beyond';
+
+const featured = beyondItems.find((item) => item.featured);
+const supporting = beyondItems.filter((item) => !item.featured);
+---
+
+<ContentLayout
+  title="Beyond the Work"
+  eyebrow="Place, curiosity, and the long view"
+  description="Some interests sit outside formal work but still shape how I see people, organizations, and place. This section collects photography, technology, local history, northern Michigan, and other pursuits that continue beyond professional roles and ventures."
+>
+  {featured && (
+    <section class="section featured-beyond">
+      <div class="container featured-grid">
+        {featured.image && <img src={featured.image} alt={featured.imageAlt ?? ''} loading="eager" decoding="async" />}
+        <article>
+          <p class="eyebrow">First developed section</p>
+          <h2>{featured.title}</h2>
+          <p class="lede">{featured.description}</p>
+          <Button href={featured.href ?? '/beyond/'} variant="ghost">Explore Photography</Button>
+        </article>
+      </div>
+    </section>
+  )}
+
+  <section class="section interests">
+    <div class="container">
+      <div class="interest-grid">
+        {supporting.map((item) => (
+          <article>
+            <p class="status">{item.status === 'future' ? 'Future area' : 'Active'}</p>
+            <h2>{item.title}</h2>
+            <p>{item.description}</p>
+            {item.href ? <a class="text-link text-link--internal" href={item.href}>Explore {item.title}</a> : <span class="quiet">No separate page yet</span>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight closing">
+    <div class="container closing-grid">
+      <p class="eyebrow">Connected, not separate</p>
+      <div>
+        <h2>The interests beyond work still shape the work.</h2>
+        <p class="lede">Place, technology, history, and observation inform how I think about durable institutions, practical systems, and communities worth serving.</p>
+        <Button href="/contact/" variant="secondary">Connect</Button>
+      </div>
+    </div>
+  </section>
+</ContentLayout>
+
+<style>
+  .featured-beyond{border-bottom:1px solid var(--line);background:var(--paper-soft)}
+  .featured-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2.5rem,6vw,6rem);align-items:center}
+  .featured-grid img{width:100%;height:min(560px,65vw);object-fit:cover;box-shadow:var(--shadow)}
+  .featured-grid article{padding-block:2rem}
+  .featured-grid .lede{margin:1.5rem 0 2rem}
+  .interest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .interest-grid article{padding:clamp(1.5rem,3vw,2.4rem);background:var(--paper)}
+  .interest-grid h2{margin:.75rem 0 1rem;font-size:clamp(1.55rem,2.6vw,2.35rem)}
+  .interest-grid p:not(.status){color:var(--ink-soft)}
+  .status,.quiet{font-size:.72rem;font-weight:760;letter-spacing:.08em;text-transform:uppercase}
+  .status{color:var(--bronze-dark)}
+  .quiet{display:inline-flex;margin-top:1.5rem;color:var(--ink-soft)}
+  .text-link{margin-top:1.5rem}
+  .closing{border-top:1px solid var(--line);background:var(--paper-raised)}
+  .closing-grid{display:grid;grid-template-columns:.65fr 1.35fr;gap:3rem}
+  .closing .lede{margin:1.25rem 0 2rem}
+  @media(max-width:860px){.featured-grid,.closing-grid{grid-template-columns:1fr}.interest-grid{grid-template-columns:1fr}}
+</style>

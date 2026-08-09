@@ -1,0 +1,47 @@
+<dialog class="lightbox" data-lightbox aria-label="Photograph viewer">
+  <button class="close" type="button" data-close aria-label="Close photograph viewer">×</button>
+  <button class="previous" type="button" data-previous aria-label="Previous photograph">←</button>
+  <div data-lightbox-content></div>
+  <button class="next" type="button" data-next aria-label="Next photograph">→</button>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+  const content = dialog?.querySelector<HTMLElement>('[data-lightbox-content]');
+  const triggers = [...document.querySelectorAll<HTMLButtonElement>('[data-photo-index]')];
+  let current = 0;
+
+  const show = (index: number) => {
+    if (!dialog || !content || !triggers.length) return;
+    current = (index + triggers.length) % triggers.length;
+    const figure = triggers[current].closest('figure');
+    const image = figure?.querySelector('img');
+    const caption = figure?.querySelector('figcaption');
+    if (!image) return;
+    content.replaceChildren(image.cloneNode(true), ...(caption ? [caption.cloneNode(true)] : []));
+    if (!dialog.open) dialog.showModal();
+  };
+
+  triggers.forEach((trigger, index) => trigger.addEventListener('click', () => show(index)));
+  dialog?.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
+  dialog?.querySelector('[data-previous]')?.addEventListener('click', () => show(current - 1));
+  dialog?.querySelector('[data-next]')?.addEventListener('click', () => show(current + 1));
+  dialog?.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  dialog?.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') show(current - 1);
+    if (event.key === 'ArrowRight') show(current + 1);
+  });
+</script>
+
+<style>
+  .lightbox{width:100vw;max-width:none;height:100vh;max-height:none;margin:0;padding:clamp(3rem,6vw,5rem);border:0;color:#fff;background:#101820ee}
+  .lightbox::backdrop{background:#071018}
+  .lightbox[open]{display:grid;grid-template-columns:auto minmax(0,1100px) auto;align-items:center;justify-content:center;gap:1rem}
+  .lightbox button{display:grid;place-items:center;width:48px;height:48px;border:1px solid #ffffff55;color:#fff;background:#101820aa;cursor:pointer}
+  .lightbox .close{position:fixed;top:1rem;right:1rem;font-size:1.6rem}
+  .lightbox :global(img){max-height:76vh;margin:auto;object-fit:contain}
+  .lightbox :global(figcaption){padding-top:1rem}
+  .lightbox :global(figcaption strong){display:block;font-family:var(--serif);font-size:1.25rem;font-weight:500}
+  .lightbox :global(figcaption span),.lightbox :global(figcaption small){display:block;color:#d8e3e7}
+  @media(max-width:600px){.lightbox{padding:4rem .5rem 1rem}.lightbox[open]{grid-template-columns:1fr 1fr}.lightbox [data-lightbox-content]{grid-column:1/-1;grid-row:1}.lightbox .previous,.lightbox .next{justify-self:center}}
+</style>
