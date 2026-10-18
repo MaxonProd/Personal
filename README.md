@@ -29,7 +29,7 @@ Work, Notes, Photos, and Updates schemas live in `src/content.config.ts`. Draft 
 
 ## Contact form
 
-The launch contact form uses a `mailto:` action to open the visitor’s default email app and address the message to the Office Hours mailbox. It does not require server-side email secrets or a Cloudflare Pages Function.
+The launch contact form uses a `mailto:` action to open the visitor’s default email app and address the message to the site's contact mailbox. It does not require server-side email secrets or a Cloudflare Pages Function.
 
 ## Launch assets still requiring owner input
 
