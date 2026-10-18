@@ -2,6 +2,7 @@
 import ContentLayout from '../layouts/ContentLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { socialLinks } from '../data/socialLinks';
+import { availableProfessionalDocuments } from '../data/professionalDocuments';
 ---
 
 <ContentLayout title="Connect with Timothy" eyebrow="Contact" description="For professional, academic, media, venture, or community inquiries, use the form below or connect through a public profile.">
@@ -19,6 +20,14 @@ import { socialLinks } from '../data/socialLinks';
             </a>
           ))}
         </div>
+        {availableProfessionalDocuments.length > 0 && (
+          <div class="resources">
+            <p class="eyebrow">Professional resources</p>
+            {availableProfessionalDocuments.map((document) => (
+              <a href={document.href} type="application/pdf" target="_blank" rel="noopener noreferrer">{document.label}<span aria-hidden="true">↗</span></a>
+            ))}
+          </div>
+        )}
         <p class="note">A personal phone number or home address is not published on this site. The contact form opens the visitor’s default email app.</p>
       </aside>
       <div>
@@ -35,6 +44,10 @@ import { socialLinks } from '../data/socialLinks';
   .links{margin-top:2rem;border-top:1px solid var(--line)}
   .links a{display:flex;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line);font-weight:700;text-decoration:none}
   .links a span:nth-child(2){color:var(--bronze)}
+  .resources{display:grid;gap:.8rem;margin-top:2rem}
+  .resources .eyebrow{margin:0}
+  .resources>a{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 0;border-bottom:1px solid var(--line);font-size:.86rem;font-weight:700;text-decoration:none}
+  .resources>a span{color:var(--bronze)}
   .note{margin-top:2rem;color:var(--ink-soft);font-size:.8rem}
   @media(max-width:760px){.contact-grid{grid-template-columns:1fr}}
 </style>

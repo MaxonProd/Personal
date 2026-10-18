@@ -8,8 +8,17 @@ import Button from '../components/Button.astro';
 import { getCollection } from 'astro:content';
 import { profile } from '../data/profile';
 import { ventures } from '../data/ventures';
+import { site } from '../data/site';
+import UpdatesTimeline from '../components/UpdatesTimeline.astro';
 
-const featured = (await getCollection('work', ({ data }) => !data.draft && data.featured)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const featured = (await getCollection('work', ({ data }) => !data.draft && data.featured)).sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
+const updatesFeatureRequested = site.updatesEnabled && site.recentUpdatesEnabled;
+const publishedUpdates = updatesFeatureRequested
+  ? (await getCollection('updates', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  : [];
+const recentUpdates = site.updatesEnabled && site.recentUpdatesEnabled && publishedUpdates.length >= site.updatesMinimumEntries
+  ? publishedUpdates.slice(0, 3)
+  : [];
 const areas = [
   ['Human Resources', 'Workforce systems, recruitment, employee relations, organizational processes, and public-sector HR experience.'],
   ['Business Education', 'Teaching, mentoring, curriculum support, and practical business education.'],
@@ -25,7 +34,7 @@ const areas = [
     <div class="container focus-grid">
       <div>
         <p class="eyebrow">Current focus</p>
-        <h2>Work in progress.</h2>
+        <h2>Current priorities.</h2>
       </div>
       <ol>{profile.focus.map((item, index) => <li><span>0{index + 1}</span>{item}</li>)}</ol>
     </div>
@@ -36,6 +45,15 @@ const areas = [
       <div class="container">
         <SectionHeading eyebrow="Selected work" title="Ideas made useful." description="Research, writing, teaching, and business projects grounded in practical questions." linkHref="/work/" linkLabel="View all work" />
         <WorkCarousel items={featured} />
+      </div>
+    </section>
+  )}
+
+  {recentUpdates.length > 0 && (
+    <section class="section recent-updates">
+      <div class="container">
+        <SectionHeading eyebrow="Recent updates" title="A few recent milestones." linkHref="/updates/" linkLabel="View all updates" />
+        <UpdatesTimeline items={recentUpdates} compact />
       </div>
     </section>
   )}
@@ -98,6 +116,7 @@ const areas = [
 
 <style>
   .focus{border-block:1px solid var(--line);background:var(--paper-soft)}
+  .recent-updates{border-block:1px solid var(--line);background:var(--paper-soft)}
   .focus-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:3rem}
   .focus h2{font-size:clamp(2rem,3vw,3rem)}
   .focus ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 2rem}

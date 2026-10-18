@@ -3,21 +3,22 @@ interface Props {
   slug: string;
   title: string;
   description: string;
+  summary?: string;
   category: string;
-  date: Date;
+  date?: Date;
   image?: string;
   organization?: string;
   featured?: boolean;
 }
 
-const { slug, title, description, category, date, image, organization, featured = false } = Astro.props;
+const { slug, title, description, summary, category, date, image, organization, featured = false } = Astro.props;
 ---
 
 <article class:list={['work-card', featured && 'featured']}>
   <a class:list={['cover', image && 'cover--image']} href={`/work/${slug}/`} aria-label={`Read about ${title}`}>
     {image ? <img src={image} alt={`Cover of ${title}`} loading="lazy" decoding="async" /> : (
       <>
-        <span class="cover-kicker">A leadership case study</span>
+        <span class="cover-kicker">{category}</span>
         <strong>{title}</strong>
         <span class="cover-rule"></span>
         <small>Timothy Maxon</small>
@@ -25,9 +26,9 @@ const { slug, title, description, category, date, image, organization, featured 
     )}
   </a>
   <div class="work-copy">
-    <div class="meta"><span>{category}</span><time datetime={date.toISOString()}>{date.getFullYear()}</time></div>
+    <div class="meta"><span>{category}</span>{date && <time datetime={date.toISOString()}>{date.getFullYear()}</time>}</div>
     <h3><a href={`/work/${slug}/`}>{title}</a></h3>
-    <p>{description}</p>
+    <p>{summary ?? description}</p>
     {organization && <span class="organization">{organization}</span>}
     <a class="text-link text-link--internal" href={`/work/${slug}/`}>View work</a>
   </div>

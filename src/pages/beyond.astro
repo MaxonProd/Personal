@@ -17,7 +17,6 @@ const supporting = beyondItems.filter((item) => !item.featured);
       <div class="container featured-grid">
         {featured.image && <img src={featured.image} alt={featured.imageAlt ?? ''} loading="eager" decoding="async" />}
         <article>
-          <p class="eyebrow">First developed section</p>
           <h2>{featured.title}</h2>
           <p class="lede">{featured.description}</p>
           <Button href={featured.href ?? '/beyond/'} variant="ghost">Explore Photography</Button>
@@ -31,10 +30,9 @@ const supporting = beyondItems.filter((item) => !item.featured);
       <div class="interest-grid">
         {supporting.map((item) => (
           <article>
-            <p class="status">{item.status === 'future' ? 'Future area' : 'Active'}</p>
             <h2>{item.title}</h2>
             <p>{item.description}</p>
-            {item.href ? <a class="text-link text-link--internal" href={item.href}>Explore {item.title}</a> : <span class="quiet">No separate page yet</span>}
+            {item.href && <a class="text-link text-link--internal" href={item.href}>Explore {item.title}</a>}
           </article>
         ))}
       </div>
@@ -62,10 +60,7 @@ const supporting = beyondItems.filter((item) => !item.featured);
   .interest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
   .interest-grid article{padding:clamp(1.5rem,3vw,2.4rem);background:var(--paper)}
   .interest-grid h2{margin:.75rem 0 1rem;font-size:clamp(1.55rem,2.6vw,2.35rem)}
-  .interest-grid p:not(.status){color:var(--ink-soft)}
-  .status,.quiet{font-size:.72rem;font-weight:760;letter-spacing:.08em;text-transform:uppercase}
-  .status{color:var(--bronze-dark)}
-  .quiet{display:inline-flex;margin-top:1.5rem;color:var(--ink-soft)}
+  .interest-grid p{color:var(--ink-soft)}
   .text-link{margin-top:1.5rem}
   .closing{border-top:1px solid var(--line);background:var(--paper-raised)}
   .closing-grid{display:grid;grid-template-columns:.65fr 1.35fr;gap:3rem}

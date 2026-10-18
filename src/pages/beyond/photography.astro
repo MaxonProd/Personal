@@ -103,10 +103,10 @@ const categories = [...new Set(photos.map((photo) => photo.category))];
     <div class="container intro-grid">
       <div>
         <p class="eyebrow">Selected photographs</p>
-        <h2>A small launch collection.</h2>
+        <h2>Places and moments worth remembering.</h2>
       </div>
       <div>
-        <p class="lede">This is presented as personal photography, not commercial photography. The collection can grow naturally as more original work is ready to share.</p>
+        <p class="lede">A personal collection of northern landscapes, night skies, travel, natural details, and everyday places.</p>
         <ul>{categories.map((category) => <li>{category}</li>)}</ul>
       </div>
     </div>
@@ -119,11 +119,6 @@ const categories = [...new Set(photos.map((photo) => photo.category))];
     </div>
   </section>
 
-  <section class="section--tight metadata">
-    <div class="container">
-      <p>Future photographs can include date, location, camera and lens metadata, and optional EXIF details when that context adds value.</p>
-    </div>
-  </section>
 </ContentLayout>
 
 <style>
@@ -135,7 +130,5 @@ const categories = [...new Set(photos.map((photo) => photo.category))];
   .intro-grid .lede{margin-bottom:1.5rem}
   ul{display:flex;flex-wrap:wrap;gap:.6rem;margin:0;padding:0;list-style:none}
   li{padding:.4rem .7rem;border:1px solid var(--line);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:rgba(255,255,255,.55)}
-  .metadata{border-top:1px solid var(--line);background:var(--paper-soft)}
-  .metadata p{max-width:720px;color:var(--ink-soft)}
   @media(max-width:760px){.intro-grid{grid-template-columns:1fr}}
 </style>

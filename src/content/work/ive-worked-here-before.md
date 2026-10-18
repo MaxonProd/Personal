@@ -6,6 +6,8 @@ date: 2026-04-27
 image: "/images/work/ive-worked-here-before-cover.jpg"
 organization: "Independently published"
 externalUrl: "https://www.amazon.com/dp/B0GYWR16XN"
+citation: "Maxon, T. (2026). I’ve Worked Here Before. Independently published."
+structuredDataType: "Book"
 featured: true
 tags: ["Leadership", "Organizational behavior", "Governance", "Human resources"]
 draft: false

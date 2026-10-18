@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../../components/Button.astro';
 import { getCollection, render } from 'astro:content';
+import { academicAppointments } from '../../data/credentials';
 
 export async function getStaticPaths() {
   const items = await getCollection('work', ({ data }) => !data.draft);
@@ -10,45 +11,56 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 const { Content } = await render(item);
+const teachingAppointments = item.data.category === 'Teaching' ? academicAppointments : [];
+const schemaType = item.data.structuredDataType ?? (item.data.category === 'Books' ? 'Book' : 'CreativeWork');
 const schema = {
   '@context': 'https://schema.org',
-  '@type': item.data.category === 'Books' ? 'Book' : 'CreativeWork',
+  '@type': schemaType,
   name: item.data.title,
-  description: item.data.description,
+  description: item.data.summary ?? item.data.description,
   image: item.data.image ? new URL(item.data.image, 'https://timothymaxon.com').href : undefined,
-  datePublished: item.data.date.toISOString(),
+  ...(item.data.date ? { datePublished: item.data.date.toISOString() } : {}),
   author: { '@type': 'Person', name: 'Timothy Maxon' },
   url: new URL(Astro.url.pathname, 'https://timothymaxon.com').href
 };
 ---
 
-<BaseLayout title={item.data.title} description={item.data.description} type={item.data.category === 'Books' ? 'book' : 'article'}>
+<BaseLayout title={item.data.title} description={item.data.summary ?? item.data.description} type={schemaType === 'Book' ? 'book' : schemaType === 'Article' ? 'article' : 'website'}>
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   <article>
     <header class="work-hero">
       <div class="container hero-grid">
         <div>
-          <p class="eyebrow">{item.data.category} / {item.data.date.getFullYear()}</p>
+          <p class="eyebrow">{item.data.category}{item.data.date && ` / ${item.data.date.getFullYear()}`}</p>
           <h1>{item.data.title}</h1>
-          <p class="lede">{item.data.description}</p>
+          <p class="lede">{item.data.summary ?? item.data.description}</p>
           <div class="actions">
             {item.data.externalUrl && <Button href={item.data.externalUrl} external>View publication</Button>}
+            {item.data.downloadUrl && <a class="download-link" href={item.data.downloadUrl} target="_blank" rel="noopener noreferrer">Open downloadable attachment</a>}
             <Button href="/work/" variant="ghost">Back to work</Button>
           </div>
         </div>
         {
           item.data.image
             ? <img class="book-cover book-cover--image" src={item.data.image} alt={`Cover of ${item.data.title}`} loading="eager" decoding="async" />
-            : <div class="book-cover" aria-label={`Cover treatment for ${item.data.title}`}><span>A leadership case study</span><strong>{item.data.title}</strong><i></i><small>Timothy Maxon</small></div>
+            : <div class="book-cover" aria-label={`Cover treatment for ${item.data.title}`}><span>{item.data.category}</span><strong>{item.data.title}</strong><i></i><small>Timothy Maxon</small></div>
         }
       </div>
     </header>
     <div class="container body-grid">
       <aside>
         <p class="eyebrow">Details</p>
-        {item.data.organization && <p><strong>Publisher</strong><br />{item.data.organization}</p>}
-        <p><strong>Published</strong><br />{item.data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+        {item.data.organization && <p><strong>{item.data.category === 'Books' ? 'Publisher' : 'Institution or organization'}</strong><br />{item.data.organization}</p>}
+        {item.data.date && <p><strong>{item.data.category === 'Books' || item.data.category === 'Writing' ? 'Published' : 'Date'}</strong><br />{item.data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>}
+        {item.data.researchStatus && <p><strong>Research status</strong><br />{item.data.researchStatus}</p>}
+        {teachingAppointments.length > 0 && (
+          <div class="appointments">
+            <p><strong>Academic appointments</strong></p>
+            <ul>{teachingAppointments.map((appointment) => <li>{appointment.title}<br /><span>{appointment.institution}</span></li>)}</ul>
+          </div>
+        )}
         <div class="tags">{item.data.tags.map((tag) => <span>{tag}</span>)}</div>
+        {item.data.citation && <p class="citation"><strong>Citation</strong><br />{item.data.citation}</p>}
       </aside>
       <div class="prose"><Content /></div>
     </div>
@@ -61,6 +73,7 @@ const schema = {
   .work-hero h1{font-size:clamp(3rem,6vw,6rem)}
   .work-hero .lede{margin-top:1.5rem}
   .actions{display:flex;gap:.75rem;margin-top:2rem}
+  .download-link{align-self:center;color:var(--ink);font-size:.85rem;font-weight:750}
   .book-cover{aspect-ratio:3/4;display:flex;padding:2rem;flex-direction:column;color:#eef6f8;background:linear-gradient(155deg,#244c65,#152633);box-shadow:0 20px 45px rgba(24,35,45,.25)}
   .book-cover--image{width:min(100%,340px);height:auto;justify-self:end;padding:0;object-fit:cover}
   .book-cover>span{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase}
@@ -69,6 +82,10 @@ const schema = {
   .book-cover small{text-transform:uppercase;letter-spacing:.08em}
   .body-grid{display:grid;grid-template-columns:220px minmax(0,740px);gap:clamp(3rem,8vw,8rem);padding-block:var(--section)}
   aside p+p{margin-top:1.2rem}
+  .citation{overflow-wrap:anywhere;color:var(--ink-soft);font-size:.82rem}
+  .appointments ul{display:grid;gap:.8rem;margin:0;padding:0;list-style:none}
+  .appointments li{font-size:.85rem}
+  .appointments li span{color:var(--ink-soft)}
   aside strong{font-size:.75rem;text-transform:uppercase;letter-spacing:.07em}
   .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.5rem}
   .tags span{padding:.3rem .55rem;border:1px solid var(--line);font-size:.68rem}

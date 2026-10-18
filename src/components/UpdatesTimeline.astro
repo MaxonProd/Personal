@@ -1,0 +1,43 @@
+---
+interface UpdateItem {
+  id: string;
+  data: {
+    title: string;
+    summary: string;
+    date: Date;
+    category: string;
+    relatedUrl?: string;
+    image?: string;
+    featured: boolean;
+  };
+}
+
+const { items, compact = false } = Astro.props as { items: UpdateItem[]; compact?: boolean };
+---
+<ol class:list={['updates-timeline', compact && 'updates-timeline--compact']}>
+  {items.map((item) => (
+    <li>
+      <time datetime={item.data.date.toISOString()}>{item.data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
+      <div class="update-copy">
+        <p class="update-category">{item.data.category}</p>
+        <h3>{item.data.title}</h3>
+        <p>{item.data.summary}</p>
+        {item.data.relatedUrl && <a href={item.data.relatedUrl} target="_blank" rel="noopener noreferrer">Related link <span aria-hidden="true">↗</span></a>}
+      </div>
+      {item.data.image && <img src={item.data.image} alt="" loading="lazy" decoding="async" />}
+    </li>
+  ))}
+</ol>
+
+<style>
+  .updates-timeline{display:grid;gap:0;margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+  .updates-timeline li{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:1.5rem;align-items:start;padding:1.5rem 0;border-bottom:1px solid var(--line)}
+  time{padding-top:.25rem;color:var(--ink-soft);font-size:.78rem}
+  .update-category{margin:0;color:var(--bronze-dark);font-size:.68rem;font-weight:750;letter-spacing:.09em;text-transform:uppercase}
+  h3{margin:.35rem 0 .55rem;font-size:1.2rem}
+  .update-copy>p:not(.update-category){max-width:720px;margin:0;color:var(--ink-soft)}
+  .update-copy>a{display:inline-block;margin-top:.8rem;font-size:.82rem;font-weight:750;text-decoration:none}
+  .updates-timeline img{width:100px;height:75px;object-fit:cover}
+  .updates-timeline--compact li{grid-template-columns:120px minmax(0,1fr);padding:1.1rem 0}
+  @media(max-width:620px){.updates-timeline li,.updates-timeline--compact li{grid-template-columns:1fr;gap:.6rem}.updates-timeline img{width:140px;height:100px}}
+</style>

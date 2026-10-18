@@ -6,12 +6,16 @@ const work = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    category: z.enum(['Research', 'Books', 'Writing', 'Business', 'Teaching', 'Presentations']),
-    date: z.coerce.date(),
+    summary: z.string().optional(),
+    category: z.enum(['Books', 'Research', 'Teaching', 'Business Projects', 'Writing', 'Presentations', 'Media']),
+    date: z.coerce.date().optional(),
     image: z.string().optional(),
     organization: z.string().optional(),
     externalUrl: z.string().url().optional(),
     downloadUrl: z.string().optional(),
+    citation: z.string().optional(),
+    researchStatus: z.string().optional(),
+    structuredDataType: z.enum(['Book', 'CreativeWork', 'Article', 'ScholarlyArticle']).optional(),
     featured: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false)
@@ -50,4 +54,18 @@ const photos = defineCollection({
   })
 });
 
-export const collections = { work, notes, photos };
+const updates = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/updates' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    date: z.coerce.date(),
+    category: z.enum(['Academic', 'Professional', 'Entrepreneurship', 'Public Service', 'Media']),
+    relatedUrl: z.string().url().optional(),
+    image: z.string().optional(),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(true)
+  })
+});
+
+export const collections = { work, notes, photos, updates };

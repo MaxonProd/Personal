@@ -6,7 +6,6 @@ export const beyondItems = [
     href: '/beyond/photography/',
     image: '/images/photography/northern-lights-tree.jpg',
     imageAlt: 'Northern lights and stars over silhouetted trees.',
-    status: 'active',
     featured: true,
     tags: ['Northern Michigan', 'Night Sky', 'Travel', 'Everyday']
   },
@@ -17,7 +16,6 @@ export const beyondItems = [
     href: null,
     image: null,
     imageAlt: null,
-    status: 'future',
     featured: false,
     tags: ['Place', 'Community']
   },
@@ -28,7 +26,6 @@ export const beyondItems = [
     href: null,
     image: null,
     imageAlt: null,
-    status: 'future',
     featured: false,
     tags: ['Technology', 'Local Business']
   },
@@ -39,7 +36,6 @@ export const beyondItems = [
     href: null,
     image: null,
     imageAlt: null,
-    status: 'future',
     featured: false,
     tags: ['History', 'Public Life']
   }

@@ -3,14 +3,15 @@ import ContentLayout from '../../layouts/ContentLayout.astro';
 import WorkCard from '../../components/WorkCard.astro';
 import { getCollection } from 'astro:content';
 
-const items = (await getCollection('work', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const items = (await getCollection('work', ({ data }) => !data.draft)).sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
 const categories = ['All', ...new Set(items.map((item) => item.data.category))];
 const showFilters = items.length >= 4 && categories.length > 2;
 ---
 
-<ContentLayout title="Work & Publications" eyebrow="Selected work" description="Professional, academic, written, and entrepreneurial work presented as it is completed and ready to share.">
+<ContentLayout title="Work & Publications" eyebrow="Selected work" description="Books and selected professional work across business, organizations, and leadership.">
   <section class="section">
     <div class="container">
+      <p class="cv-link">Looking for detailed career history? <a href="/cv/">View the curriculum vitae</a>.</p>
       {showFilters && (
         <div class="filters" role="group" aria-label="Filter work by category">
           {categories.map((category, index) => <button type="button" class:list={[index === 0 && 'active']} data-filter={category} aria-pressed={index === 0 ? 'true' : 'false'}>{category}</button>)}
@@ -47,6 +48,8 @@ const showFilters = items.length >= 4 && categories.length > 2;
 
 <style>
   .filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+  .cv-link{margin-bottom:2rem;color:var(--ink-soft);font-size:.9rem}
+  .cv-link a{font-weight:750}
   .filters button{padding:.55rem .9rem;border:1px solid var(--line);background:transparent;font-size:.75rem;font-weight:700;cursor:pointer}
   .filters button:hover,.filters button.active{color:var(--white);background:var(--ink)}
   .result-count{margin-bottom:2rem;color:var(--ink-soft);font-size:.8rem}

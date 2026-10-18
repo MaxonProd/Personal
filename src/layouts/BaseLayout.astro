@@ -5,8 +5,9 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
 import { profile } from '../data/profile';
+import { academicAppointments, academicInstitution, professionalSchemaJobTitles } from '../data/credentials';
 interface Props { title?: string; description?: string; image?: string; type?: 'website'|'article'|'book'; noindex?: boolean; canonicalPath?: string; }
 const props = Astro.props;
-const personSchema={'@context':'https://schema.org','@type':'Person',name:profile.name,url:site.domain,jobTitle:['Human Resources Professional','Business Professor'],alumniOf:{'@type':'CollegeOrUniversity',name:'Edgewood University'},sameAs:['https://www.linkedin.com/in/timothymaxon/','https://www.youtube.com/@OfficeHoursTM']};
+const personSchema={'@context':'https://schema.org','@type':'Person',name:profile.name,url:site.domain,jobTitle:professionalSchemaJobTitles,affiliation:academicAppointments.map((appointment)=>({'@type':'Organization',name:appointment.institution})),alumniOf:{'@type':'CollegeOrUniversity',name:academicInstitution},sameAs:['https://www.linkedin.com/in/timothymaxon/','https://www.youtube.com/@OfficeHoursTM']};
 ---
 <!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><meta name="theme-color" content="#f6f7f5"/><link rel="icon" type="image/svg+xml" href="/favicon.svg"/><SEO {...props}/><script type="application/ld+json" set:html={JSON.stringify(personSchema)}/></head><body><a class="skip-link" href="#main-content">Skip to content</a><Header/><main id="main-content"><slot/></main><Footer/></body></html>

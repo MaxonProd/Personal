@@ -1,0 +1,25 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import UpdatesTimeline from '../../components/UpdatesTimeline.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  if (!site.updatesEnabled) return [];
+
+  const entries = (await getCollection('updates', ({ data }) => !data.draft))
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  if (entries.length < site.updatesMinimumEntries) return [];
+
+  return [{ params: { slug: undefined }, props: { entries } }];
+}
+
+const { entries } = Astro.props;
+---
+<ContentLayout title="Updates" eyebrow="Professional activity" description="Selected academic, professional, entrepreneurial, public-service, and media milestones.">
+  <section class="section">
+    <div class="container">
+      <UpdatesTimeline items={entries} />
+    </div>
+  </section>
+</ContentLayout>

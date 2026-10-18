@@ -2,7 +2,8 @@
 import Button from './Button.astro';
 import { profile } from '../data/profile';
 import { socialLinks } from '../data/socialLinks';
-import { site } from '../data/site';
+import { heroCredentials, professionalDescriptor } from '../data/credentials';
+import { resumeDocument } from '../data/professionalDocuments';
 ---
 
 <section class="hero">
@@ -10,8 +11,10 @@ import { site } from '../data/site';
     <div class="hero-copy">
       <p class="eyebrow">Northern Michigan / United States</p>
       <h1><span>Timothy</span><span>Maxon</span></h1>
-      <p class="credentials">MBA <i>/</i> PHR <i>/</i> SSGB</p>
-      <p class="descriptor">{profile.descriptor}</p>
+      <p class="credentials" aria-label={heroCredentials.map((credential) => credential.title).join(', ')}>
+        {heroCredentials.map((credential, index) => <>{index > 0 && <i>/</i>}{credential.abbreviation}</>)}
+      </p>
+      <p class="descriptor">{professionalDescriptor}</p>
       <p class="intro">{profile.introduction}</p>
       <div class="actions">
         <Button href="/work/">View Selected Work</Button>
@@ -20,7 +23,7 @@ import { site } from '../data/site';
       </div>
       <div class="secondary">
         {socialLinks.map((link) => <a href={link.href} target="_blank" rel="me noopener noreferrer">{link.label}</a>)}
-        {site.resumePath && <a href={site.resumePath}>Resume</a>}
+        {resumeDocument.available && <a href={resumeDocument.href} type="application/pdf" target="_blank" rel="noopener noreferrer">Résumé (PDF)</a>}
         <a href="/contact/">Contact</a>
       </div>
     </div>

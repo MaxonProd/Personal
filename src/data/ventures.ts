@@ -4,7 +4,7 @@ export const ventures = [
     mark: 'CW',
     logo: '/images/logos/citadel-wireless.png',
     industry: 'Telecommunications',
-    description: 'A mobile connectivity company focused on practical service, resilient communications, and community-oriented access.',
+    description: 'A proposed mobile virtual network operator in development, focused on practical service, resilient communications, and community-oriented access.',
     website: 'https://citadelwireless.com',
     status: 'In development',
     tone: 'forest'
@@ -14,7 +14,7 @@ export const ventures = [
     mark: 'MP',
     logo: '/images/logos/maxon-products.png',
     industry: 'Business Development and Brand Management',
-    description: 'A holding and development company creating and supporting practical businesses, products, and operating brands.',
+    description: 'The parent operating and development entity, founded May 2019, creating and supporting practical businesses, products, and operating brands.',
     website: 'https://maxonprod.com',
     status: 'Active',
     tone: 'bronze'

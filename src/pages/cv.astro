@@ -1,0 +1,226 @@
+---
+import ContentLayout from '../layouts/ContentLayout.astro';
+import { academicCredentials, additionalEducation, currentAppointments, cvLastUpdated, doctoralResearch, foreignQualifications, foreignQualificationsNote, militaryService, priorExperience, professionalCertifications } from '../data/cv';
+import { academicCvDocument } from '../data/professionalDocuments';
+import { professionalSchemaJobTitles } from '../data/credentials';
+import { ventures } from '../data/ventures';
+
+const cvSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  name: 'Curriculum Vitae — Timothy Maxon',
+  url: new URL('/cv/', 'https://timothymaxon.com').href,
+  mainEntity: {
+    '@type': 'Person',
+    name: 'Timothy Maxon',
+    jobTitle: professionalSchemaJobTitles,
+    sameAs: ['https://www.linkedin.com/in/timothymaxon/', 'https://www.youtube.com/@OfficeHoursTM']
+  }
+};
+---
+
+<ContentLayout
+  title="Curriculum Vitae"
+  eyebrow="Professional and academic profile"
+  description="Professional experience, academic appointments, education, research, publications, certifications, and service."
+  canonicalPath="/cv/"
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(cvSchema)} />
+
+  <div class="container cv-toolbar">
+    <p><span>Last updated</span><time datetime="2026-10">{cvLastUpdated}</time></p>
+    {academicCvDocument.available && (
+      <a class="button" href={academicCvDocument.href} type="application/pdf" target="_blank" rel="noopener noreferrer">
+        Download CV / Résumé (PDF)
+      </a>
+    )}
+  </div>
+
+  <section class="section cv-section">
+    <div class="container cv-section-grid">
+      <div>
+        <p class="eyebrow">Professional summary</p>
+        <h2>Commercial leadership, business education, and applied research.</h2>
+      </div>
+      <p class="cv-lede">Business professional, university educator, and doctoral researcher with experience in commercialization, organizational operations, human resources, and entrepreneurship. Current work includes commercial leadership with Impact Team K (IFMC), teaching at Newlane University and Sonoran Desert Institute, and founder-led business development. Background includes federal healthcare HR, military administration, business process improvement, and U.S. Air Force service. Doctor of Business Administration candidate researching flexible work arrangements and multigenerational teams.</p>
+    </div>
+  </section>
+
+  <section class="section cv-section">
+    <div class="container">
+      <p class="eyebrow">Current appointments</p>
+      <div class="cv-entries">
+        {currentAppointments.map((appointment) => (
+          <article class="cv-entry">
+            <div class="cv-entry-heading">
+              <h3>{appointment.title}</h3>
+              <span class="cv-date">{'employmentType' in appointment ? `${appointment.employmentType} · ${appointment.date}` : appointment.date}</span>
+            </div>
+            <p class="cv-organization">{appointment.organization}</p>
+            <ul>{appointment.responsibilities.map((responsibility) => <li>{responsibility}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cv-section">
+    <div class="container">
+      <p class="eyebrow">Entrepreneurial leadership</p>
+      <div class="cv-entries">
+        {ventures.map((venture) => (
+          <article class="cv-entry venture-entry">
+            <div class="cv-entry-heading">
+              <h3>{venture.name}{venture.name === 'Maxon Products' ? ' LLC' : ''}</h3>
+              <span>{venture.status}</span>
+            </div>
+            <p class="cv-organization">{venture.name === 'Maxon Products' ? 'Parent operating and development entity · Founded May 2019' : venture.industry}</p>
+            <p>{venture.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cv-section">
+    <div class="container">
+      <p class="eyebrow">Employment history</p>
+      <div class="cv-entries">
+        {priorExperience.map((role) => (
+          <article class="cv-entry">
+            <div class="cv-entry-heading">
+              <h3>{role.title}</h3>
+              <span class="cv-date">{role.date}</span>
+            </div>
+            <p class="cv-organization">{role.organization}{'setting' in role && role.setting ? ` · ${role.setting}` : ''}</p>
+            <ul>{role.responsibilities.map((responsibility) => <li>{responsibility}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cv-section">
+    <div class="container">
+      <p class="eyebrow">Education</p>
+      <div class="cv-entries education-entries">
+        {academicCredentials.map((credential) => (
+          <article class="cv-entry">
+            <div class="cv-entry-heading">
+              <h3>{credential.title}{'abbreviation' in credential ? ` (${credential.abbreviation})` : ' (DBA)'}</h3>
+              <span>{credential.status === 'Candidate' ? `${credential.status} · In progress · ${credential.date}` : credential.date}</span>
+            </div>
+            <p class="cv-organization">{credential.detail}</p>
+            {'researchArea' in credential && <p>Doctoral research in {credential.researchArea.toLowerCase()}.</p>}
+          </article>
+        ))}
+        <article class="cv-entry foreign-entry">
+          <div class="cv-entry-heading">
+            <h3>International business qualifications</h3>
+            <span>2024</span>
+          </div>
+          <p class="cv-organization">ENEB / Universidad Isabel I, Spain</p>
+          <ul>{foreignQualifications.map((qualification) => <li>{qualification}</li>)}</ul>
+          <p>{foreignQualificationsNote}</p>
+        </article>
+        {additionalEducation.map((credential) => (
+          <article class="cv-entry">
+            <div class="cv-entry-heading">
+              <h3>{credential.title}</h3>
+              <span>{credential.date}</span>
+            </div>
+            <p class="cv-organization">{credential.institution}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cv-section">
+    <div class="container cv-section-grid">
+      <div>
+        <p class="eyebrow">Academic research</p>
+        <h2>{doctoralResearch.title}</h2>
+      </div>
+      <div class="cv-body">
+        <p>{doctoralResearch.overview}</p>
+        <p><strong>Research areas</strong></p>
+        <ul>{doctoralResearch.areas.map((area) => <li>{area}</li>)}</ul>
+        <p>{doctoralResearch.methods}</p>
+        <p><strong>Status:</strong> {doctoralResearch.status}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cv-section">
+    <div class="container cv-section-grid">
+      <div>
+        <p class="eyebrow">Publication</p>
+        <h2>Books and selected work.</h2>
+      </div>
+      <div class="cv-body">
+        <p>Maxon, T. (2026). <cite>I’ve Worked Here Before</cite>. Independently published. Practitioner-oriented study of leadership, organizational culture, governance, and accountability.</p>
+        <p><a href="/work/ive-worked-here-before/">View publication details</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cv-section">
+    <div class="container cv-section-grid">
+      <div>
+        <p class="eyebrow">Professional certifications</p>
+        <h2>Credentials for practice.</h2>
+      </div>
+      <div class="cv-entries">
+        {professionalCertifications.map((certification) => (
+          <article class="cv-entry">
+            <div class="cv-entry-heading">
+              <h3>{certification.title} ({certification.abbreviation})</h3>
+              <span>{certification.date}</span>
+            </div>
+            <p class="cv-organization">{certification.issuer}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cv-section">
+    <div class="container cv-section-grid">
+      <div>
+        <p class="eyebrow">Military and public service</p>
+        <h2>Service and selected recognition.</h2>
+      </div>
+      <div class="cv-body">
+        <p>{militaryService.summary}</p>
+        <ul>{militaryService.recognition.map((honor) => <li>{honor}</li>)}</ul>
+        <p><a href="/public-service/">Read more about public service</a></p>
+      </div>
+    </div>
+  </section>
+</ContentLayout>
+
+<style>
+  .cv-toolbar{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding-block:1.5rem;border-bottom:1px solid var(--line)}
+  .cv-toolbar p{display:grid;gap:.2rem;margin:0}
+  .cv-toolbar p span{color:var(--ink-soft);font-size:.72rem;font-weight:750;letter-spacing:.08em;text-transform:uppercase}
+  .cv-toolbar time{font-family:var(--serif);font-size:1.15rem}
+  .cv-section{border-bottom:1px solid var(--line)}
+  .cv-section-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(2rem,6vw,6rem);align-items:start}
+  .cv-section h2{max-width:580px;font-size:clamp(1.8rem,3.2vw,3rem)}
+  .cv-lede{color:var(--ink-soft);font-size:clamp(1.05rem,1.45vw,1.18rem)}
+  .cv-entries{display:grid;gap:1.5rem;max-width:980px}
+  .cv-entry{padding-top:1.2rem;border-top:1px solid var(--line)}
+  .cv-entry:first-child{padding-top:0;border-top:0}
+  .cv-entry-heading{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+  .cv-entry h3{margin:0;font-size:1.15rem}
+  .cv-entry-heading>span{flex:0 0 auto;color:var(--bronze-dark);font-size:.76rem;font-weight:750}
+  .cv-organization{margin:.35rem 0 .75rem;color:var(--ink-soft);font-weight:650}
+  .cv-entry ul,.cv-body ul{margin:.5rem 0 0;padding-left:1.2rem}
+  .cv-entry li,.cv-body li{margin-top:.4rem;color:var(--ink-soft)}
+  .cv-entry>p:not(.cv-organization),.cv-body>p{color:var(--ink-soft)}
+  .cv-body a{font-weight:750}
+  .foreign-entry{margin-top:1rem}
+  @media(max-width:760px){.cv-section-grid{grid-template-columns:1fr}.cv-toolbar{align-items:flex-start;flex-direction:column}}
+  @media(max-width:500px){.cv-entry-heading{align-items:flex-start;flex-direction:column;gap:.25rem}}
+</style>
