@@ -24,6 +24,12 @@ const servicePhotos = [
     caption: 'Formal portrait from Air Force service.'
   }
 ];
+
+const awardDocuments = {
+  'December 4, 2024': '/documents/awards/air-and-space-achievement-medal-second-oak-leaf-cluster-2024.pdf',
+  'December 10, 2021': '/documents/awards/air-force-achievement-medal-first-oak-leaf-cluster-2021.pdf',
+  'June 1, 2020': '/documents/awards/air-force-achievement-medal-2020.pdf'
+} as const;
 ---
 
 <ContentLayout title="Public Service" eyebrow="A record of service" description="My background in military service, federal work, education, and community life informs an interest in practical, responsible public leadership.">
@@ -100,7 +106,7 @@ const servicePhotos = [
                 <li>
                   <time>{award.awarded}</time>
                   <div>
-                    <strong>{'cluster' in award ? award.cluster : 'Original award'}</strong>
+                    <strong><a class="award-title-link" href={awardDocuments[award.awarded]} type="application/pdf" target="_blank" rel="noopener noreferrer">{'cluster' in award ? award.cluster : 'Original award'}<span class="sr-only"> (opens award certificate PDF in a new tab)</span></a></strong>
                     <span>{award.title} · {award.citation}</span>
                   </div>
                 </li>
@@ -175,6 +181,9 @@ const servicePhotos = [
   .award-records li:first-child{border-top:0}
   .award-records time{color:var(--bronze-dark);font-size:.72rem;font-weight:750}
   .award-records strong{display:block;font-size:.82rem}
+  .award-title-link{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:.15em}
+  .award-title-link:hover{text-decoration-color:currentColor}
+  .award-title-link:focus-visible{outline:2px solid var(--bronze-dark);outline-offset:3px}
   .award-records li span{display:block;margin-top:.2rem;color:var(--ink-soft);font-size:.74rem}
   .values{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3rem;border-top:1px solid rgba(255,255,255,.22)}
   .values article{padding:2rem 2rem 2rem 0}
