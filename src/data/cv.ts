@@ -164,7 +164,9 @@ export const militaryService = {
     setting: 'Senior Airman, later Staff Sergeant (E-5)'
   },
   recognition: [
-    'Air Force Achievement Medal (later titled Air and Space Achievement Medal), with two oak leaf clusters (three awards total)',
+    'Air Force Achievement Medal for meritorious service, awarded June 1, 2020',
+    'Air Force Achievement Medal with First Oak Leaf Cluster for outstanding achievement, awarded December 10, 2021',
+    'Air and Space Achievement Medal with Second Oak Leaf Cluster for outstanding achievement, awarded December 4, 2024',
     'Two Diamond Sharp Awards',
     'Airman of the Quarter (2019)',
     'Distinguished Graduate, Air Force administrative training (2018)'
