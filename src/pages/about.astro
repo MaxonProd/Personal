@@ -80,6 +80,7 @@ const chapters = [
                 <li>
                   {'href' in entry && typeof entry.href === 'string' ? <a href={entry.href}>{entry.title}</a> : <strong>{entry.title}</strong>}
                   {'detail' in entry && entry.detail && <span>{entry.detail}</span>}
+                  {'institutionUrl' in entry && typeof entry.institutionUrl === 'string' && 'institution' in entry && typeof entry.institution === 'string' && <a class="institution-link" href={entry.institutionUrl} target="_blank" rel="noopener noreferrer">{entry.institution}<span class="sr-only"> (opens in a new tab)</span></a>}
                   {'abbreviation' in entry && entry.abbreviation && <span>{entry.abbreviation}</span>}
                 </li>
               ))}
@@ -164,6 +165,8 @@ const chapters = [
   .credential-group ul,.professional-documents ul{display:grid;gap:1rem;margin:0;padding:0;list-style:none}
   .credential-group li{display:grid;gap:.2rem}
   .credential-group li strong,.credential-group li a{font-size:.9rem;text-decoration:none}
+  .credential-group li .institution-link{justify-self:start;color:var(--ink-soft);font-size:.8rem;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:.16em}
+  .credential-group li .institution-link:hover{text-decoration-color:currentColor}
   .credential-group li span{color:var(--ink-soft);font-size:.8rem}
   .documents-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:3rem;align-items:start}
   .documents-grid h2{font-size:clamp(1.8rem,3vw,2.8rem)}

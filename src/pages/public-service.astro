@@ -1,7 +1,7 @@
 ---
 import ContentLayout from '../layouts/ContentLayout.astro';
 import Button from '../components/Button.astro';
-import { militaryService, priorExperience } from '../data/cv';
+import { militaryService, publicServiceTimeline } from '../data/cv';
 
 const values = [
   ['Practical problem-solving', 'Begin with the conditions people actually face, then make the path forward understandable and workable.'],
@@ -74,7 +74,7 @@ const servicePhotos = [
       </div>
       <div>
         <ol class="service-timeline">
-          {priorExperience.map((role) => (
+          {publicServiceTimeline.map((role) => (
             <li>
               <span class="timeline-date">{role.date}</span>
               <div>

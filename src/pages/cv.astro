@@ -1,6 +1,6 @@
 ---
 import ContentLayout from '../layouts/ContentLayout.astro';
-import { academicCredentials, additionalEducation, currentAppointments, cvLastUpdated, doctoralResearch, foreignQualifications, foreignQualificationsNote, militaryService, priorExperience, professionalCertifications } from '../data/cv';
+import { academicCredentials, additionalEducation, currentAppointments, cvLastUpdated, doctoralResearch, foreignQualifications, foreignQualificationsNote, internationalEducationLinks, militaryService, priorExperience, professionalCertifications } from '../data/cv';
 import { academicCvDocument } from '../data/professionalDocuments';
 import { professionalSchemaJobTitles } from '../data/credentials';
 import { ventures } from '../data/ventures';
@@ -71,7 +71,7 @@ const cvSchema = {
         {ventures.map((venture) => (
           <article class="cv-entry venture-entry">
             <div class="cv-entry-heading">
-              <h3>{venture.name}{venture.name === 'Maxon Products' ? ' LLC' : ''}</h3>
+              <h3><a href={venture.website} target="_blank" rel="noopener noreferrer">{venture.name}{venture.name === 'Maxon Products' ? ' LLC' : ''}<span class="sr-only"> (opens in a new tab)</span></a></h3>
               <span>{venture.status}</span>
             </div>
             <p class="cv-organization">{venture.name === 'Maxon Products' ? 'Parent operating and development entity · Founded May 2019' : venture.industry}</p>
@@ -110,7 +110,7 @@ const cvSchema = {
               <h3>{credential.title}{'abbreviation' in credential ? ` (${credential.abbreviation})` : ' (DBA)'}</h3>
               <span>{credential.status === 'Candidate' ? `${credential.status} · In progress · ${credential.date}` : credential.date}</span>
             </div>
-            <p class="cv-organization">{credential.detail}</p>
+            <p class="cv-organization">{'program' in credential && `${credential.program} · `}<a href={credential.institutionUrl} target="_blank" rel="noopener noreferrer">{credential.institution}<span class="sr-only"> (opens in a new tab)</span></a></p>
             {'researchArea' in credential && <p>Doctoral research in {credential.researchArea.toLowerCase()}.</p>}
           </article>
         ))}
@@ -119,9 +119,9 @@ const cvSchema = {
             <h3>International business qualifications</h3>
             <span>2024</span>
           </div>
-          <p class="cv-organization">ENEB / Universidad Isabel I, Spain</p>
+          <p class="cv-organization"><a href={internationalEducationLinks.eneb} target="_blank" rel="noopener noreferrer">ENEB<span class="sr-only"> (opens in a new tab)</span></a> / <a href={internationalEducationLinks.universidadIsabelI} target="_blank" rel="noopener noreferrer">Universidad Isabel I<span class="sr-only"> (opens in a new tab)</span></a>, Spain</p>
           <ul>{foreignQualifications.map((qualification) => <li>{qualification}</li>)}</ul>
-          <p>{foreignQualificationsNote}</p>
+          <p><a href={internationalEducationLinks.evaluator} target="_blank" rel="noopener noreferrer">Educational Credential Evaluators (ECE)<span class="sr-only"> (opens in a new tab)</span></a> {foreignQualificationsNote}</p>
         </article>
         {additionalEducation.map((credential) => (
           <article class="cv-entry">
@@ -129,7 +129,7 @@ const cvSchema = {
               <h3>{credential.title}</h3>
               <span>{credential.date}</span>
             </div>
-            <p class="cv-organization">{credential.institution}</p>
+            <p class="cv-organization"><a href={credential.institutionUrl} target="_blank" rel="noopener noreferrer">{credential.institution}<span class="sr-only"> (opens in a new tab)</span></a></p>
           </article>
         ))}
       </div>
@@ -214,8 +214,12 @@ const cvSchema = {
   .cv-entry:first-child{padding-top:0;border-top:0}
   .cv-entry-heading{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
   .cv-entry h3{margin:0;font-size:1.15rem}
+  .venture-entry h3 a{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:.16em}
+  .venture-entry h3 a:hover{text-decoration-color:currentColor}
   .cv-entry-heading>span{flex:0 0 auto;color:var(--bronze-dark);font-size:.76rem;font-weight:750}
   .cv-organization{margin:.35rem 0 .75rem;color:var(--ink-soft);font-weight:650}
+  .cv-organization a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:.16em}
+  .cv-organization a:hover{text-decoration-color:currentColor}
   .cv-entry ul,.cv-body ul{margin:.5rem 0 0;padding-left:1.2rem}
   .cv-entry li,.cv-body li{margin-top:.4rem;color:var(--ink-soft)}
   .cv-entry>p:not(.cv-organization),.cv-body>p{color:var(--ink-soft)}

@@ -27,8 +27,10 @@ export const credentialGroups = [
     entries: academicCredentials.map((credential) => ({
       title: credential.title,
       detail: credential.status === 'Candidate'
-        ? `${credential.status} · ${credential.detail} · ${credential.date}`
-        : `${credential.detail} · ${credential.date}`,
+        ? `${credential.status} · In progress · ${credential.date}`
+        : `${credential.program} · ${credential.date}`,
+      institution: credential.institution,
+      institutionUrl: credential.institutionUrl,
       abbreviation: 'abbreviation' in credential ? credential.abbreviation : undefined
     }))
   },

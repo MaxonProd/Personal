@@ -1,22 +1,27 @@
 export const cvLastUpdated = 'October 2026';
 
 export const academicInstitution = 'Edgewood University';
+export const academicInstitutionUrl = 'https://www.edgewood.edu/';
 
 export const academicCredentials = [
   {
-    title: 'Master of Business Administration',
-    abbreviation: 'MBA',
-    detail: `Applied Business Research · ${academicInstitution}`,
-    date: '2025',
-    status: 'Earned'
-  },
-  {
     title: 'Doctor of Business Administration',
     shortTitle: 'DBA',
-    detail: academicInstitution,
+    abbreviation: 'DBA',
+    institution: academicInstitution,
+    institutionUrl: academicInstitutionUrl,
     date: 'Expected May 2027',
     status: 'Candidate',
     researchArea: 'Organizational effectiveness, flexible work, and multigenerational teams'
+  },
+  {
+    title: 'Master of Business Administration',
+    abbreviation: 'MBA',
+    program: 'Applied Business Research',
+    institution: academicInstitution,
+    institutionUrl: academicInstitutionUrl,
+    date: '2025',
+    status: 'Earned'
   }
 ] as const;
 
@@ -134,17 +139,30 @@ export const foreignQualifications = [
   'Master in Business and Corporate Communication'
 ] as const;
 
-export const foreignQualificationsNote = 'Awarded in 2024 through ENEB / Universidad Isabel I, Spain. Educational Credential Evaluators (ECE) evaluated both foreign qualifications as comparable to U.S. bachelor’s degrees. These are the original foreign award titles, not U.S. master’s-degree awards.';
+export const internationalEducationLinks = {
+  eneb: 'https://eneb.com/',
+  universidadIsabelI: 'https://www.ui1.es/',
+  evaluator: 'https://www.ece.org/ECE/About'
+} as const;
+
+export const foreignQualificationsNote = 'evaluated both foreign qualifications as comparable to U.S. bachelor’s degrees. These are the original foreign award titles, not U.S. master’s-degree awards.';
 
 export const additionalEducation = [
-  { title: 'Associate of Science, Firearms Technology', institution: 'Sonoran Desert Institute', date: '2024' },
-  { title: 'Associate of Applied Science, Board of Governors / Criminal Justice', institution: 'Pierpont Community & Technical College', date: '2024' },
-  { title: 'Associate of Applied Science, Information Management', institution: 'Community College of the Air Force', date: '2024' },
-  { title: 'Associate of Individualized Study', institution: 'Eastern Gateway Community College', date: '2024 · cum laude' }
+  { title: 'Associate of Science, Firearms Technology', institution: 'Sonoran Desert Institute', institutionUrl: 'https://sdi.edu/', date: '2024' },
+  { title: 'Associate of Applied Science, Board of Governors / Criminal Justice', institution: 'Pierpont Community & Technical College', institutionUrl: 'https://www.pierpont.edu/', date: '2024' },
+  { title: 'Associate of Applied Science, Information Management', institution: 'Community College of the Air Force', institutionUrl: 'https://www.airuniversity.af.edu/Barnes/CCAF/', date: '2024' },
+  { title: 'Associate of Individualized Study', institution: 'Eastern Gateway Community College', institutionUrl: 'https://egcc.edu/', date: '2024 · cum laude' }
 ] as const;
 
 export const militaryService = {
-  summary: 'United States Air Force active duty (October 2018–June 2020), followed by Michigan Air National Guard service (June 2020–June 2025). Guard service overlapped with federal civilian human-resources employment from December 2020 to June 2025. Guard rank progression: Senior Airman to Staff Sergeant (E-5).',
+  summary: 'Active-duty service in the United States Air Force was followed by Michigan Air National Guard service alongside a separate federal civilian career.',
+  guardService: {
+    title: 'Michigan Air National Guard service',
+    organization: 'Michigan Air National Guard',
+    employmentType: 'Concurrent military service',
+    date: 'June 2020–June 2025',
+    setting: 'Senior Airman, later Staff Sergeant (E-5)'
+  },
   recognition: [
     'Air Force Achievement Medal (later titled Air and Space Achievement Medal), with two oak leaf clusters (three awards total)',
     'Two Diamond Sharp Awards',
@@ -152,3 +170,9 @@ export const militaryService = {
     'Distinguished Graduate, Air Force administrative training (2018)'
   ]
 } as const;
+
+export const publicServiceTimeline = [
+  ...priorExperience.slice(0, 2),
+  militaryService.guardService,
+  ...priorExperience.slice(2)
+] as const;
