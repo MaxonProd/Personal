@@ -24,8 +24,8 @@ export const beyondPhotography = [
 
 export const beyondImages = {
   historicalArms: {
-    src: '/images/beyond/gras-cavalry-rifle/rifle-detail-800.webp',
-    srcset: '/images/beyond/gras-cavalry-rifle/rifle-detail-480.webp 480w, /images/beyond/gras-cavalry-rifle/rifle-detail-800.webp 800w',
+    src: '/images/beyond/gras-cavalry-rifle/rifle-overview-800.webp',
+    srcset: '/images/beyond/gras-cavalry-rifle/rifle-overview-480.webp 480w, /images/beyond/gras-cavalry-rifle/rifle-overview-800.webp 692w',
     alt: 'French Gras cavalry rifle after restoration, shown vertically on a wood floor.',
     caption: 'After restoration: 1866–74 French Gras Cavalry Rifle.'
   },
