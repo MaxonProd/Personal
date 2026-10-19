@@ -50,7 +50,7 @@ const servicePhotos = [
       <article>
         <p class="eyebrow">01 / Service background</p>
         <h2>Mission depends on the systems behind it.</h2>
-        <p>My service includes the United States Air Force, the Michigan Air National Guard, and federal civilian human-resources work. Administrative and organizational roles showed me how much public outcomes depend on dependable processes, good judgment, and people who take responsibility for the details.</p>
+        <p>My background includes active-duty service in the United States Air Force, concurrent Michigan Air National Guard service, and federal civilian human-resources work. Administrative and organizational roles showed me how much public outcomes depend on dependable processes, good judgment, and people who take responsibility for the details.</p>
       </article>
       <article>
         <p class="eyebrow">02 / Education as service</p>
@@ -79,7 +79,7 @@ const servicePhotos = [
               <span class="timeline-date">{role.date}</span>
               <div>
                 <h3>{role.title}</h3>
-                <p>{role.organization}{'setting' in role && role.setting ? ` · ${role.setting}` : ''}</p>
+                <p>{role.employmentType} · {role.organization}{'setting' in role && role.setting ? ` · ${role.setting}` : ''}</p>
               </div>
             </li>
           ))}

@@ -79,6 +79,7 @@ export const currentAppointments = [
 export const priorExperience = [
   {
     title: 'Human Resources Specialist, GS-0201-11',
+    employmentType: 'Federal civilian employee',
     organization: 'Army Civilian Human Resources Agency',
     setting: 'Supporting Defense Health Agency facilities',
     date: 'September 2024–September 2025',
@@ -91,7 +92,8 @@ export const priorExperience = [
   },
   {
     title: 'Human Resources Specialist, GS-0201-09',
-    organization: 'Michigan Air National Guard — Alpena Combat Readiness Training Center',
+    employmentType: 'Federal civilian employee',
+    organization: 'Alpena Combat Readiness Training Center, Michigan Air National Guard',
     date: 'December 2020–September 2024',
     responsibilities: [
       'Administered civilian personnel programs involving staffing, classification, workforce planning, employee relations, records, and policy compliance.',
@@ -102,6 +104,7 @@ export const priorExperience = [
   },
   {
     title: 'Executive Administrator / Commander’s Support Staff',
+    employmentType: 'Active-duty military assignment',
     organization: 'United States Air Force — Scott Air Force Base, Illinois',
     date: 'October 2018–June 2020',
     responsibilities: [
@@ -141,7 +144,7 @@ export const additionalEducation = [
 ] as const;
 
 export const militaryService = {
-  summary: 'United States Air Force active duty (2018–2020) and Michigan Air National Guard service (2020–2025). Final rank: Staff Sergeant (E-5).',
+  summary: 'United States Air Force active duty (October 2018–June 2020), followed by Michigan Air National Guard service (June 2020–June 2025). Guard service overlapped with federal civilian human-resources employment from December 2020 to June 2025. Guard rank progression: Senior Airman to Staff Sergeant (E-5).',
   recognition: [
     'Air Force Achievement Medal (later titled Air and Space Achievement Medal), with two oak leaf clusters (three awards total)',
     'Two Diamond Sharp Awards',

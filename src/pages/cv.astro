@@ -92,7 +92,7 @@ const cvSchema = {
               <h3>{role.title}</h3>
               <span class="cv-date">{role.date}</span>
             </div>
-            <p class="cv-organization">{role.organization}{'setting' in role && role.setting ? ` · ${role.setting}` : ''}</p>
+            <p class="cv-organization">{role.employmentType} · {role.organization}{'setting' in role && role.setting ? ` · ${role.setting}` : ''}</p>
             <ul>{role.responsibilities.map((responsibility) => <li>{responsibility}</li>)}</ul>
           </article>
         ))}
