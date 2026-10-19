@@ -1,0 +1,52 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import BeyondProjectCard from '../../components/BeyondProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('beyondProjects', ({ data }) =>
+  !data.draft && ['Workshop', 'Technology'].includes(data.category)
+);
+---
+
+<ContentLayout
+  title="Making & Practical Projects"
+  eyebrow="Beyond the work / Practical projects"
+  description="Selected hands-on projects in practical design, making, and problem-solving."
+>
+  <div class="container parent-link"><a href="/beyond/">← Back to Beyond</a></div>
+
+  <section class="section introduction">
+    <div class="container intro-grid">
+      <p class="eyebrow">Workshop & design</p>
+      <div>
+        <h2>Solving practical problems through making.</h2>
+        <p>These projects begin with a specific use or constraint and take shape through hands-on adaptation, experimentation, and problem-solving.</p>
+      </div>
+    </div>
+  </section>
+
+  {projects.length > 0 && (
+    <section class="section project-section" aria-labelledby="projects-title">
+      <div class="container">
+        <p class="eyebrow">Selected projects</p>
+        <h2 id="projects-title">Making & practical projects</h2>
+        <div class="project-list">
+          {projects.map((project) => <BeyondProjectCard project={project} section="practical-projects" />)}
+        </div>
+      </div>
+    </section>
+  )}
+</ContentLayout>
+
+<style>
+  .parent-link{padding-top:1.25rem}
+  .parent-link a{color:var(--ink-soft);font-size:.86rem;font-weight:700;text-decoration:none}
+  .parent-link a:hover{color:var(--ink)}
+  .introduction{background:var(--paper-raised)}
+  .intro-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:clamp(2rem,6vw,6rem);align-items:start}
+  .intro-grid h2{max-width:13ch;font-size:clamp(2.2rem,4.3vw,4rem)}
+  .intro-grid div>p:not(.eyebrow){max-width:48rem;color:var(--ink-soft)}
+  .project-section{border-top:1px solid var(--line)}
+  .project-list{display:grid;max-width:850px;gap:1rem;margin-top:2rem}
+  @media(max-width:760px){.intro-grid{grid-template-columns:1fr}}
+</style>
