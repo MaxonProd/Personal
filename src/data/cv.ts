@@ -154,6 +154,23 @@ export const additionalEducation = [
   { title: 'Associate of Individualized Study', institution: 'Eastern Gateway Community College', institutionUrl: 'https://egcc.edu/', date: '2024 · cum laude' }
 ] as const;
 
+export const achievementMedal = {
+  title: 'Air Force Achievement Medal',
+  oakLeafClusters: 2,
+  totalAwards: 3,
+  awards: [
+    { title: 'Air and Space Achievement Medal', cluster: 'Second Oak Leaf Cluster', citation: 'Outstanding achievement', awarded: 'December 4, 2024' },
+    { title: 'Air Force Achievement Medal', cluster: 'First Oak Leaf Cluster', citation: 'Outstanding achievement', awarded: 'December 10, 2021' },
+    { title: 'Air Force Achievement Medal', citation: 'Meritorious service', awarded: 'June 1, 2020' }
+  ]
+} as const;
+
+const additionalMilitaryRecognition = [
+  'Two Diamond Sharp Awards',
+  'Airman of the Quarter (2019)',
+  'Distinguished Graduate, Air Force administrative training (2018)'
+] as const;
+
 export const militaryService = {
   summary: 'Active-duty service in the United States Air Force was followed by Michigan Air National Guard service alongside a separate federal civilian career.',
   guardService: {
@@ -163,13 +180,11 @@ export const militaryService = {
     date: 'June 2020–June 2025',
     setting: 'Senior Airman, later Staff Sergeant (E-5)'
   },
+  achievementMedal,
+  additionalRecognition: additionalMilitaryRecognition,
   recognition: [
-    'Air Force Achievement Medal for meritorious service, awarded June 1, 2020',
-    'Air Force Achievement Medal with First Oak Leaf Cluster for outstanding achievement, awarded December 10, 2021',
-    'Air and Space Achievement Medal with Second Oak Leaf Cluster for outstanding achievement, awarded December 4, 2024',
-    'Two Diamond Sharp Awards',
-    'Airman of the Quarter (2019)',
-    'Distinguished Graduate, Air Force administrative training (2018)'
+    ...achievementMedal.awards.map((award) => `${award.title}${'cluster' in award ? ` with ${award.cluster}` : ''} for ${award.citation.toLowerCase()}, awarded ${award.awarded}`),
+    ...additionalMilitaryRecognition
   ]
 } as const;
 
