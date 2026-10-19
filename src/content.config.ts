@@ -70,6 +70,8 @@ const updates = defineCollection({
 
 const beyondImage = z.object({
   src: z.string(),
+  srcset: z.string().optional(),
+  sizes: z.string().optional(),
   alt: z.string().min(10),
   caption: z.string().optional(),
   date: z.coerce.date().optional(),

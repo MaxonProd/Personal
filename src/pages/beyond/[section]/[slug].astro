@@ -2,15 +2,14 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
-const sectionForCategory = {
-  Restoration: 'historical-arms',
-  History: 'historical-arms',
-  Workshop: 'practical-projects',
-  Technology: 'practical-projects',
-  Outdoors: 'outdoors'
-} as const;
-
 export async function getStaticPaths() {
+  const sectionForCategory = {
+    Restoration: 'historical-arms',
+    History: 'historical-arms',
+    Workshop: 'practical-projects',
+    Technology: 'practical-projects',
+    Outdoors: 'outdoors'
+  } as const;
   const projects = await getCollection('beyondProjects', ({ data }) => !data.draft);
   return projects.map((project) => ({
     params: { section: sectionForCategory[project.data.category], slug: project.id },
@@ -22,6 +21,8 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 const imageProps = (image: (typeof project.data.galleryImages)[number]) => ({
   src: image.src,
+  srcset: image.srcset,
+  sizes: image.sizes,
   alt: image.alt,
   caption: image.caption
 });
@@ -41,15 +42,20 @@ const imageProps = (image: (typeof project.data.galleryImages)[number]) => ({
             <h1>{project.data.title}</h1>
             <p class="lede">{project.data.description}</p>
           </div>
-          {project.data.featuredImage && <img class="feature-image" src={project.data.featuredImage.src} alt={project.data.featuredImage.alt} loading="eager" decoding="async" />}
+          {project.data.featuredImage && (
+            <figure class="feature-figure">
+              <img src={project.data.featuredImage.src} srcset={project.data.featuredImage.srcset} sizes={project.data.featuredImage.sizes} alt={project.data.featuredImage.alt} loading="eager" decoding="async" />
+              {project.data.featuredImage.caption && <figcaption>{project.data.featuredImage.caption}</figcaption>}
+            </figure>
+          )}
         </div>
       </div>
     </header>
 
     {(project.data.beforeImage || project.data.afterImage) && (
       <section class="container comparison" aria-label="Before and after images">
-        {project.data.beforeImage && <figure><img src={imageProps(project.data.beforeImage).src} alt={imageProps(project.data.beforeImage).alt} /><figcaption>{project.data.beforeImage.caption ?? 'Before'}</figcaption></figure>}
-        {project.data.afterImage && <figure><img src={imageProps(project.data.afterImage).src} alt={imageProps(project.data.afterImage).alt} /><figcaption>{project.data.afterImage.caption ?? 'After'}</figcaption></figure>}
+        {project.data.beforeImage && <figure><img src={imageProps(project.data.beforeImage).src} srcset={imageProps(project.data.beforeImage).srcset} sizes={imageProps(project.data.beforeImage).sizes} alt={imageProps(project.data.beforeImage).alt} /><figcaption>{project.data.beforeImage.caption ?? 'Before'}</figcaption></figure>}
+        {project.data.afterImage && <figure><img src={imageProps(project.data.afterImage).src} srcset={imageProps(project.data.afterImage).srcset} sizes={imageProps(project.data.afterImage).sizes} alt={imageProps(project.data.afterImage).alt} /><figcaption>{project.data.afterImage.caption ?? 'After'}</figcaption></figure>}
       </section>
     )}
 
@@ -66,7 +72,7 @@ const imageProps = (image: (typeof project.data.galleryImages)[number]) => ({
 
     {project.data.galleryImages.length > 0 && (
       <section class="container gallery" aria-label="Project gallery">
-        {project.data.galleryImages.map((image) => <figure><img src={image.src} alt={image.alt} loading="lazy" decoding="async" />{image.caption && <figcaption>{image.caption}</figcaption>}</figure>)}
+        {project.data.galleryImages.map((image) => <figure><img src={image.src} srcset={image.srcset} sizes={image.sizes} alt={image.alt} loading="lazy" decoding="async" />{image.caption && <figcaption>{image.caption}</figcaption>}</figure>)}
       </section>
     )}
     <div class="container back-link"><a href={`/beyond/${Astro.params.section}/`}>← Back to projects</a></div>
@@ -82,7 +88,8 @@ const imageProps = (image: (typeof project.data.galleryImages)[number]) => ({
   .hero-grid--text{grid-template-columns:minmax(0,850px)}
   h1{max-width:15ch;font-size:clamp(3rem,7vw,6.5rem)}
   .lede{max-width:46rem;margin-top:1.5rem}
-  .feature-image{width:100%;max-height:620px;object-fit:cover;box-shadow:var(--shadow)}
+  .feature-figure{margin:0;border:0;background:var(--paper-soft);box-shadow:var(--shadow)}
+  .feature-figure img{width:100%;height:min(70vh,620px);object-fit:contain;background:var(--paper-soft)}
   .body-grid{display:grid;grid-template-columns:200px minmax(0,740px);gap:clamp(2.5rem,8vw,8rem);padding-block:var(--section)}
   aside p+p{margin-top:1.2rem}
   aside strong{font-size:.75rem;letter-spacing:.07em;text-transform:uppercase}
@@ -92,8 +99,10 @@ const imageProps = (image: (typeof project.data.galleryImages)[number]) => ({
   .comparison,.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;padding-top:var(--section)}
   figure{margin:0;border:1px solid var(--line);background:var(--paper-raised)}
   figure img{width:100%;height:clamp(260px,38vw,480px);object-fit:cover}
+  .comparison figure img,.gallery figure img{object-fit:contain;background:var(--paper-soft)}
+  .gallery figure img{height:auto;max-height:560px}
   figcaption{padding:.75rem 1rem;color:var(--ink-soft);font-size:.85rem}
   .back-link{padding-block:0 var(--section)}
   .back-link a{font-size:.85rem;font-weight:750;text-decoration:none}
-  @media(max-width:760px){.hero-grid,.body-grid{grid-template-columns:1fr}.feature-image{max-height:450px}.comparison,.gallery{grid-template-columns:1fr}}
+  @media(max-width:760px){.hero-grid,.body-grid{grid-template-columns:1fr}.feature-figure img{height:min(70vh,520px)}.comparison,.gallery{grid-template-columns:1fr}}
 </style>

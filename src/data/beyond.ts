@@ -24,10 +24,10 @@ export const beyondPhotography = [
 
 export const beyondImages = {
   historicalArms: {
-    src: '/images/beyond/field-object-study-800.webp',
-    srcset: '/images/beyond/field-object-study-480.webp 480w, /images/beyond/field-object-study-800.webp 800w, /images/beyond/field-object-study-1200.webp 1200w',
-    alt: 'A vintage rifle leaning against textured rock outdoors.',
-    caption: 'A vintage rifle photographed against stone and spring grass.'
+    src: '/images/beyond/gras-cavalry-rifle/rifle-overview-800.webp',
+    srcset: '/images/beyond/gras-cavalry-rifle/rifle-overview-480.webp 480w, /images/beyond/gras-cavalry-rifle/rifle-overview-800.webp 692w',
+    alt: 'French Gras cavalry rifle shown vertically on a wood floor from the stock to the muzzle.',
+    caption: '1866–74 French Gras Cavalry Rifle.'
   },
   outdoors: {
     src: '/images/beyond/ice-sunrise-panorama-1200.webp',
