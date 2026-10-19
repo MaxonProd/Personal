@@ -11,7 +11,7 @@ const showFilters = items.length >= 4 && categories.length > 2;
 <ContentLayout title="Work & Publications" eyebrow="Selected work" description="Books and selected professional work across business, organizations, and leadership.">
   <section class="section">
     <div class="container">
-      <p class="cv-link">Looking for detailed career history? <a href="/cv/">View the curriculum vitae</a>.</p>
+      <p class="cv-link">Looking for detailed career history? <a href="/cv/">View the curriculum vitae →</a>.</p>
       {showFilters && (
         <div class="filters" role="group" aria-label="Filter work by category">
           {categories.map((category, index) => <button type="button" class:list={[index === 0 && 'active']} data-filter={category} aria-pressed={index === 0 ? 'true' : 'false'}>{category}</button>)}
@@ -48,8 +48,8 @@ const showFilters = items.length >= 4 && categories.length > 2;
 
 <style>
   .filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
-  .cv-link{margin-bottom:2rem;color:var(--ink-soft);font-size:.9rem}
-  .cv-link a{font-weight:750}
+  .cv-link{margin-bottom:2rem;padding:.8rem 1rem;border:1px solid var(--line);border-left:3px solid var(--bronze);background:var(--paper-soft);color:var(--ink-soft);font-size:.9rem}
+  .cv-link a{color:var(--ink);font-weight:800;text-decoration:underline;text-underline-offset:.16em}
   .filters button{padding:.55rem .9rem;border:1px solid var(--line);background:transparent;font-size:.75rem;font-weight:700;cursor:pointer}
   .filters button:hover,.filters button.active{color:var(--white);background:var(--ink)}
   .result-count{margin-bottom:2rem;color:var(--ink-soft);font-size:.8rem}

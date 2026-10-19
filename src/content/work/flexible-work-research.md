@@ -1,5 +1,6 @@
 ---
 title: "Flexible Work and Multigenerational Teams"
+coverTitle: "Flexible Work and Multi-Generational Teams"
 description: "Ongoing doctoral research examining flexible work arrangements and multigenerational teams."
 summary: "A qualitative multiple-case study of remote, hybrid, and compressed four-day work arrangements in multigenerational teams."
 category: "Research"

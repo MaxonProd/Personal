@@ -17,8 +17,8 @@ export const site = {
     { label: 'About', href: '/about/' },
     { label: 'Work', href: '/work/' },
     { label: 'Ventures', href: '/ventures/' },
-    { label: 'Beyond', href: '/beyond/' },
     { label: 'Public Service', href: '/public-service/' },
+    { label: 'Beyond', href: '/beyond/' },
     { label: 'Contact', href: '/contact/' }
   ]
 } as const;

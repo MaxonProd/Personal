@@ -43,7 +43,7 @@ const schema = {
         {
           item.data.image
             ? <img class="book-cover book-cover--image" src={item.data.image} alt={`Cover of ${item.data.title}`} loading="eager" decoding="async" />
-            : <div class="book-cover" aria-label={`Cover treatment for ${item.data.title}`}><span>{item.data.category}</span><strong>{item.data.title}</strong><i></i><small>Timothy Maxon</small></div>
+            : <div class="book-cover" aria-label={`Cover treatment for ${item.data.title}`}><span>{item.data.category}</span><strong>{item.data.coverTitle ?? item.data.title}</strong><i></i><small>Timothy Maxon</small></div>
         }
       </div>
     </header>
@@ -77,7 +77,7 @@ const schema = {
   .book-cover{aspect-ratio:3/4;display:flex;padding:2rem;flex-direction:column;color:#eef6f8;background:linear-gradient(155deg,#244c65,#152633);box-shadow:0 20px 45px rgba(24,35,45,.25)}
   .book-cover--image{width:min(100%,340px);height:auto;justify-self:end;padding:0;object-fit:cover}
   .book-cover>span{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase}
-  .book-cover strong{width:100%;min-width:0;margin:auto 0;font-family:var(--serif);font-size:clamp(1.35rem,2.2vw,2rem);font-weight:500;line-height:1.03;overflow-wrap:anywhere;hyphens:auto}
+  .book-cover strong{width:100%;min-width:0;margin:auto 0;font-family:var(--serif);font-size:clamp(1.35rem,2.2vw,2rem);font-weight:500;line-height:1.03;overflow-wrap:normal;word-break:normal;hyphens:manual}
   .book-cover i{width:44px;height:2px;margin-bottom:1rem;background:#8cc7d3}
   .book-cover small{text-transform:uppercase;letter-spacing:.08em}
   .body-grid{display:grid;grid-template-columns:220px minmax(0,740px);gap:clamp(3rem,8vw,8rem);padding-block:var(--section)}
