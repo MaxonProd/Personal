@@ -42,7 +42,7 @@ const imageProps = (image: (typeof project.data.galleryImages)[number]) => ({
             <h1>{project.data.title}</h1>
             <p class="lede">{project.data.description}</p>
           </div>
-          {project.data.featuredImage && (
+          {project.data.featuredImage && !(project.data.beforeImage && project.data.afterImage) && (
             <figure class="feature-figure">
               <img src={project.data.featuredImage.src} srcset={project.data.featuredImage.srcset} sizes={project.data.featuredImage.sizes} alt={project.data.featuredImage.alt} loading="eager" decoding="async" />
               {project.data.featuredImage.caption && <figcaption>{project.data.featuredImage.caption}</figcaption>}
