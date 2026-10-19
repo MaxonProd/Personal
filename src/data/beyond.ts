@@ -1,42 +1,38 @@
-export const beyondItems = [
+export const beyondPhotography = [
   {
-    title: 'Photography',
-    description:
-      'A returning personal practice focused on northern landscapes, night skies, travel, natural details, and everyday places worth remembering.',
-    href: '/beyond/photography/',
-    image: '/images/photography/northern-lights-tree.jpg',
-    imageAlt: 'Northern lights and stars over silhouetted trees.',
-    featured: true,
-    tags: ['Northern Michigan', 'Night Sky', 'Travel', 'Everyday']
+    src: '/images/beyond/northern-lights-tree-800.webp',
+    srcset: '/images/beyond/northern-lights-tree-480.webp 480w, /images/beyond/northern-lights-tree-800.webp 800w, /images/beyond/northern-lights-tree-1200.webp 1200w',
+    title: 'Northern Lights',
+    alt: 'Green aurora and stars over silhouetted trees.',
+    caption: 'Aurora color over a quiet night sky.'
   },
   {
-    title: 'Northern Michigan',
-    description:
-      'Places, working landscapes, small communities, seasons, and local institutions continue to shape how I think about service, opportunity, and durable public life.',
-    href: null,
-    image: null,
-    imageAlt: null,
-    featured: false,
-    tags: ['Place', 'Community']
+    src: '/images/beyond/upper-peninsula-waterfall-800.webp',
+    srcset: '/images/beyond/upper-peninsula-waterfall-480.webp 480w, /images/beyond/upper-peninsula-waterfall-800.webp 800w, /images/beyond/upper-peninsula-waterfall-1200.webp 1200w',
+    title: 'Falling Water',
+    alt: 'A waterfall dropping through layered rock into a foaming stream.',
+    caption: 'Rock, water, and motion in the Upper Peninsula.'
   },
   {
-    title: 'Technology & Local Business',
-    description:
-      'Practical tools, operating models, and small systems that can strengthen rural economies, local organizations, and independent work.',
-    href: null,
-    image: null,
-    imageAlt: null,
-    featured: false,
-    tags: ['Technology', 'Local Business']
-  },
-  {
-    title: 'History & Public Life',
-    description:
-      'An interest in how institutions, policy, leadership, and local decisions shape communities over time.',
-    href: null,
-    image: null,
-    imageAlt: null,
-    featured: false,
-    tags: ['History', 'Public Life']
+    src: '/images/beyond/bus-window-reflection-800.webp',
+    srcset: '/images/beyond/bus-window-reflection-480.webp 480w, /images/beyond/bus-window-reflection-800.webp 800w, /images/beyond/bus-window-reflection-1200.webp 1200w',
+    title: 'Bus Window Reflection',
+    alt: 'A flag and bright sun reflected in the window of a bus.',
+    caption: 'The sun and flag reflected through a bus window.'
   }
 ] as const;
+
+export const beyondImages = {
+  historicalArms: {
+    src: '/images/beyond/field-object-study-800.webp',
+    srcset: '/images/beyond/field-object-study-480.webp 480w, /images/beyond/field-object-study-800.webp 800w, /images/beyond/field-object-study-1200.webp 1200w',
+    alt: 'A vintage rifle leaning against textured rock outdoors.',
+    caption: 'A vintage rifle photographed against stone and spring grass.'
+  },
+  outdoors: {
+    src: '/images/beyond/ice-sunrise-panorama-1200.webp',
+    srcset: '/images/beyond/ice-sunrise-panorama-480.webp 480w, /images/beyond/ice-sunrise-panorama-800.webp 800w, /images/beyond/ice-sunrise-panorama-1200.webp 1200w',
+    alt: 'A low sunset shining over ice-covered trees and ground after a severe ice storm.',
+    caption: 'An ice-storm sunset across northern Michigan.'
+  }
+} as const;

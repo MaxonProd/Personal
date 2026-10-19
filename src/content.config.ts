@@ -68,4 +68,32 @@ const updates = defineCollection({
   })
 });
 
-export const collections = { work, notes, photos, updates };
+const beyondImage = z.object({
+  src: z.string(),
+  alt: z.string().min(10),
+  caption: z.string().optional(),
+  date: z.coerce.date().optional(),
+  camera: z.string().optional(),
+  lens: z.string().optional()
+});
+
+const beyondProjects = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/beyondProjects' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    category: z.enum(['Restoration', 'Workshop', 'Outdoors', 'Technology', 'History']),
+    date: z.coerce.date().optional(),
+    featuredImage: beyondImage.optional(),
+    galleryImages: z.array(beyondImage).default([]),
+    beforeImage: beyondImage.optional(),
+    afterImage: beyondImage.optional(),
+    location: z.string().optional(),
+    status: z.enum(['Planning', 'In progress', 'Complete']).optional(),
+    tags: z.array(z.string()).default([]),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(true)
+  })
+});
+
+export const collections = { work, notes, photos, updates, beyondProjects };

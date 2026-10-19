@@ -10,6 +10,7 @@ import { profile } from '../data/profile';
 import { ventures } from '../data/ventures';
 import { site } from '../data/site';
 import UpdatesTimeline from '../components/UpdatesTimeline.astro';
+import { beyondPhotography } from '../data/beyond';
 
 const featured = (await getCollection('work', ({ data }) => !data.draft && data.featured)).sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
 const updatesFeatureRequested = site.updatesEnabled && site.recentUpdatesEnabled;
@@ -75,16 +76,15 @@ const areas = [
   <section class="section photo-preview">
     <div class="container photo-grid">
       <figure class="photo-art">
-        <img src="/images/photography/northern-lights-tree.jpg" alt="Northern lights and stars over silhouetted trees." loading="lazy" decoding="async" />
+        <img src={beyondPhotography[0].src} srcset={beyondPhotography[0].srcset} sizes="(max-width: 820px) 100vw, 50vw" alt={beyondPhotography[0].alt} loading="lazy" decoding="async" />
         <figcaption>Northern lights over Michigan.</figcaption>
       </figure>
       <div>
         <p class="eyebrow">Beyond the work</p>
         <h2>Place, curiosity, and the long view.</h2>
-        <p class="lede">Beyond my professional work, I keep space for photography, local history, technology, northern Michigan, and the places and questions that continue to shape how I see institutions, communities, and everyday life.</p>
+        <p class="lede">Photography, historical restoration, hands-on projects, and time spent outdoors in northern Michigan are some of the interests I pursue beyond professional work.</p>
         <div class="button-row">
           <Button href="/beyond/" variant="ghost">Explore Beyond</Button>
-          <Button href="/beyond/photography/" variant="secondary">View Photography</Button>
         </div>
       </div>
     </div>

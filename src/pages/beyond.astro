@@ -1,69 +1,130 @@
 ---
 import ContentLayout from '../layouts/ContentLayout.astro';
 import Button from '../components/Button.astro';
-import { beyondItems } from '../data/beyond';
+import BeyondProjectCard from '../components/BeyondProjectCard.astro';
+import { getCollection } from 'astro:content';
+import { beyondImages, beyondPhotography } from '../data/beyond';
 
-const featured = beyondItems.find((item) => item.featured);
-const supporting = beyondItems.filter((item) => !item.featured);
+const projects = await getCollection('beyondProjects', ({ data }) => !data.draft);
+const restorationProjects = projects.filter((project) => ['Restoration', 'History'].includes(project.data.category));
+const makingProjects = projects.filter((project) => ['Workshop', 'Technology'].includes(project.data.category));
+const outdoorProjects = projects.filter((project) => project.data.category === 'Outdoors');
 ---
 
 <ContentLayout
   title="Beyond the Work"
-  eyebrow="Place, curiosity, and the long view"
-  description="Some interests sit outside formal work but still shape how I see people, organizations, and place. This section collects photography, technology, local history, northern Michigan, and other pursuits that continue beyond professional roles and ventures."
+  eyebrow="Beyond the work"
+  description="Outside of work, I've always enjoyed getting hands-on with things. Photography, restoring historical objects, working with tools, experimenting with technology, and spending time outdoors have all been interests I've returned to over the years. This is where I share some of those projects, interests, and experiences."
 >
-  {featured && (
-    <section class="section featured-beyond">
-      <div class="container featured-grid">
-        {featured.image && <img src={featured.image} alt={featured.imageAlt ?? ''} loading="eager" decoding="async" />}
-        <article>
-          <h2>{featured.title}</h2>
-          <p class="lede">{featured.description}</p>
-          <Button href={featured.href ?? '/beyond/'} variant="ghost">Explore Photography</Button>
-        </article>
-      </div>
-    </section>
-  )}
-
-  <section class="section interests">
+  <section class="section photography" aria-labelledby="photography-title">
     <div class="container">
-      <div class="interest-grid">
-        {supporting.map((item) => (
-          <article>
-            <h2>{item.title}</h2>
-            <p>{item.description}</p>
-            {item.href && <a class="text-link text-link--internal" href={item.href}>Explore {item.title}</a>}
-          </article>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Photography</p>
+          <h2 id="photography-title">Places and moments worth noticing.</h2>
+        </div>
+        <div>
+          <p>Photography was one of my earlier interests, and I've recently started spending more time behind the camera again. I particularly enjoy landscapes, night skies, natural details, and the opportunity to document places that might otherwise go unnoticed.</p>
+          <Button href="/beyond/photography/" variant="ghost">Explore Photography</Button>
+        </div>
+      </div>
+      <div class="photo-row">
+        {beyondPhotography.map((photo) => (
+          <figure>
+            <img src={photo.src} srcset={photo.srcset} sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 33vw" alt={photo.alt} loading="lazy" decoding="async" />
+            <figcaption><strong>{photo.title}</strong><span>{photo.caption}</span></figcaption>
+          </figure>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section--tight closing">
-    <div class="container closing-grid">
-      <p class="eyebrow">Connected, not separate</p>
-      <div>
-        <h2>The interests beyond work still shape the work.</h2>
-        <p class="lede">Place, technology, history, and observation inform how I think about durable institutions, practical systems, and communities worth serving.</p>
-        <Button href="/contact/" variant="secondary">Connect</Button>
+  <section class="section arms" aria-labelledby="arms-title">
+    <div class="container feature-grid">
+      <figure class="feature-image">
+        <img src={beyondImages.historicalArms.src} srcset={beyondImages.historicalArms.srcset} sizes="(max-width: 800px) 100vw, 48vw" alt={beyondImages.historicalArms.alt} loading="lazy" decoding="async" />
+        <figcaption>{beyondImages.historicalArms.caption}</figcaption>
+      </figure>
+      <div class="feature-copy">
+        <p class="eyebrow">Historical firearms & restoration</p>
+        <h2 id="arms-title">Understanding how things were made.</h2>
+        <p class="lede">I've been interested in historical firearms, metalworking, and restoration since my teens. What interests me most is understanding how things were designed and made, and the challenge of bringing old equipment back into good condition while respecting its history.</p>
+        <Button href="/beyond/historical-arms/" variant="ghost">Explore Restoration Projects</Button>
+        {restorationProjects.length > 0 && (
+          <div class="project-list" aria-label="Selected restoration projects">
+            {restorationProjects.filter((project) => project.data.featured).slice(0, 2).map((project) => <BeyondProjectCard project={project} section="historical-arms" />)}
+          </div>
+        )}
       </div>
+    </div>
+  </section>
+
+  <section class="section making" aria-labelledby="making-title">
+    <div class="container making-grid">
+      <div>
+        <p class="eyebrow">Workshop</p>
+        <h2 id="making-title">Making & Practical Projects</h2>
+      </div>
+      <div>
+        <p class="lede">I enjoy working with tools, figuring out how things operate, and tackling projects myself. That can mean machining a part, experimenting with a design, repairing equipment, or learning a new process simply because it interests me.</p>
+        {makingProjects.filter((project) => project.data.featured).length > 0 && (
+          <div class="project-list" aria-label="Selected making projects">
+            {makingProjects.filter((project) => project.data.featured).slice(0, 2).map((project) => <BeyondProjectCard project={project} section="practical-projects" />)}
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section outdoors" aria-labelledby="outdoors-title">
+    <div class="container feature-grid outdoors-grid">
+      <div class="feature-copy">
+        <p class="eyebrow">Outdoors & Northern Michigan</p>
+        <h2 id="outdoors-title">At home in a changing landscape.</h2>
+        <p class="lede">Growing up in the Upper Peninsula and living in northern Michigan has given me an appreciation for the outdoors and the character of the region. I enjoy exploring the landscape, working on projects around the property, and spending time outside throughout the changing seasons.</p>
+        {outdoorProjects.filter((project) => project.data.featured).length > 0 && (
+          <div class="project-list" aria-label="Selected outdoor projects">
+            {outdoorProjects.filter((project) => project.data.featured).slice(0, 2).map((project) => <BeyondProjectCard project={project} section="outdoors" />)}
+          </div>
+        )}
+      </div>
+      <figure class="feature-image landscape-image">
+        <img src={beyondImages.outdoors.src} srcset={beyondImages.outdoors.srcset} sizes="(max-width: 800px) 100vw, 48vw" alt={beyondImages.outdoors.alt} loading="lazy" decoding="async" />
+        <figcaption>{beyondImages.outdoors.caption}</figcaption>
+      </figure>
     </div>
   </section>
 </ContentLayout>
 
 <style>
-  .featured-beyond{border-bottom:1px solid var(--line);background:var(--paper-soft)}
-  .featured-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2.5rem,6vw,6rem);align-items:center}
-  .featured-grid img{width:100%;height:min(560px,65vw);object-fit:cover;box-shadow:var(--shadow)}
-  .featured-grid article{padding-block:2rem}
-  .featured-grid .lede{margin:1.5rem 0 2rem}
-  .interest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-  .interest-grid article{padding:clamp(1.5rem,3vw,2.4rem);background:var(--paper)}
-  .interest-grid h2{margin:.75rem 0 1rem;font-size:clamp(1.55rem,2.6vw,2.35rem)}
-  .interest-grid p{color:var(--ink-soft)}
-  .text-link{margin-top:1.5rem}
-  .closing{border-top:1px solid var(--line);background:var(--paper-raised)}
-  .closing-grid{display:grid;grid-template-columns:.65fr 1.35fr;gap:3rem}
-  .closing .lede{margin:1.25rem 0 2rem}
-  @media(max-width:860px){.featured-grid,.closing-grid{grid-template-columns:1fr}.interest-grid{grid-template-columns:1fr}}
+  .photography{background:var(--paper-raised)}
+  .section-heading{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,6vw,6rem);align-items:end;margin-bottom:2.5rem}
+  h2{max-width:16ch}
+  .section-heading p:not(.eyebrow){max-width:42rem;margin:0 0 1.5rem;color:var(--ink-soft)}
+  .photo-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+  figure{margin:0}
+  .photo-row figure{border:1px solid var(--line);background:var(--paper)}
+  .photo-row img{width:100%;height:clamp(220px,28vw,360px);object-fit:cover}
+  figcaption{color:var(--ink-soft)}
+  .photo-row figcaption{display:grid;gap:.3rem;padding:1rem}
+  .photo-row strong{color:var(--ink);font-family:var(--serif);font-size:1.15rem;font-weight:500}
+  .photo-row span{font-size:.85rem}
+  .arms{border-block:1px solid var(--line);background:var(--paper-soft)}
+  .arms .feature-image img{object-fit:contain;background:#e8e9e6}
+  .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2.5rem,7vw,7rem);align-items:center}
+  .feature-image{position:relative;background:var(--blue);box-shadow:var(--shadow)}
+  .feature-image img{width:100%;height:clamp(360px,48vw,600px);object-fit:cover}
+  .feature-image figcaption{position:absolute;right:.8rem;bottom:.8rem;left:.8rem;width:max-content;max-width:calc(100% - 1.6rem);padding:.55rem .7rem;color:#eef6f8;background:#101820c9;font-size:.75rem;backdrop-filter:blur(10px)}
+  .feature-copy h2{margin:.75rem 0 1rem;font-size:clamp(2.2rem,4.3vw,4rem)}
+  .feature-copy .lede{margin:0 0 1.75rem;color:var(--ink-soft)}
+  .making{border-bottom:1px solid var(--line)}
+  .making-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(2rem,6vw,6rem)}
+  .making-grid h2{font-size:clamp(2.2rem,4vw,3.8rem)}
+  .making-grid .lede{max-width:54rem;margin:0;color:var(--ink-soft)}
+  .outdoors{background:var(--paper-raised)}
+  .outdoors-grid{grid-template-columns:1fr 1fr}
+  .outdoors .feature-image img{height:clamp(360px,42vw,520px)}
+  .project-list{display:grid;gap:1rem;margin-top:2rem}
+  @media(max-width:800px){.section-heading,.feature-grid,.making-grid{grid-template-columns:1fr}.photo-row{grid-template-columns:1fr 1fr}.photo-row figure:last-child{display:none}.feature-image img{height:clamp(280px,70vw,480px)}}
+  @media(max-width:520px){.photo-row{grid-template-columns:1fr}.photo-row figure:last-child{display:block}.photo-row img{height:300px}}
 </style>

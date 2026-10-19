@@ -1,0 +1,67 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import BeyondProjectCard from '../../components/BeyondProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('beyondProjects', ({ data }) => !data.draft);
+const restorationProjects = projects
+  .filter((project) => ['Restoration', 'History'].includes(project.data.category))
+  .sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
+---
+
+<ContentLayout
+  title="Historical Firearms & Restoration"
+  eyebrow="Beyond the work / Historical arms"
+  description="I've been interested in historical firearms, metalworking, and restoration since my teens. What interests me most is understanding how things were designed and made, and the challenge of bringing old equipment back into good condition while respecting its history."
+>
+  <div class="container parent-link"><a href="/beyond/">← Back to Beyond</a></div>
+
+  <section class="section introduction">
+    <div class="container intro-grid">
+      <p class="eyebrow">Research & restoration</p>
+      <div>
+        <h2>History, materials, and workmanship.</h2>
+        <p>Understanding an object's condition and researching its history are part of what makes restoration interesting to me. I enjoy working with wood and metal and learning how the materials, design, and the choices made over time shape an object's present condition.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section project-overview" aria-labelledby="gras-title">
+    <div class="container project-grid">
+      <p class="eyebrow">Selected object</p>
+      <div>
+        <h2 id="gras-title">1866–74 French Gras Cavalry Rifle</h2>
+        <p class="lede">Acquired as a C-grade antique through Royal Tiger Imports, this personal project has involved condition assessment, historical research, and extensive restoration and refinishing work on its wood and metal components.</p>
+      </div>
+    </div>
+  </section>
+
+  {restorationProjects.length > 0 && (
+    <section class="section project-section" aria-labelledby="projects-title">
+      <div class="container">
+        <p class="eyebrow">Selected projects</p>
+        <h2 id="projects-title">Restoration & historical objects</h2>
+        <div class="project-list">
+          {restorationProjects.map((project) => <BeyondProjectCard project={project} section="historical-arms" />)}
+        </div>
+      </div>
+    </section>
+  )}
+</ContentLayout>
+
+<style>
+  .parent-link{padding-top:1.25rem}
+  .parent-link a{color:var(--ink-soft);font-size:.86rem;font-weight:700;text-decoration:none}
+  .parent-link a:hover{color:var(--ink)}
+  .introduction{background:var(--paper-raised)}
+  .intro-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:clamp(2rem,6vw,6rem);align-items:start}
+  .intro-grid h2{max-width:13ch;font-size:clamp(2.2rem,4.3vw,4rem)}
+  .intro-grid div>p:not(.eyebrow){max-width:48rem;color:var(--ink-soft)}
+  .project-overview{border-block:1px solid var(--line);background:var(--paper-soft)}
+  .project-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:clamp(2rem,6vw,6rem)}
+  .project-grid h2{font-size:clamp(2rem,3.5vw,3.2rem)}
+  .project-grid .lede{color:var(--ink-soft)}
+  .project-section{border-top:1px solid var(--line)}
+  .project-list{display:grid;max-width:850px;gap:1rem;margin-top:2rem}
+  @media(max-width:760px){.intro-grid,.project-grid{grid-template-columns:1fr}}
+</style>
