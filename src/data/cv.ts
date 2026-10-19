@@ -143,7 +143,8 @@ export const additionalEducation = [
 export const militaryService = {
   summary: 'United States Air Force active duty (2018–2020) and Michigan Air National Guard service (2020–2025). Final rank: Staff Sergeant (E-5).',
   recognition: [
-    'Air Force Achievement Medal (three awards)',
+    'Air Force Achievement Medal with two oak leaf clusters (three awards total)',
+    'Two Diamond Sharp Awards',
     'Airman of the Quarter (2019)',
     'Distinguished Graduate, Air Force administrative training (2018)'
   ]

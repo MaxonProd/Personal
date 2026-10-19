@@ -78,7 +78,7 @@ const chapters = [
             <ul>
               {group.entries.map((entry) => (
                 <li>
-                  {'href' in entry && entry.href ? <a href={entry.href}>{entry.title}</a> : <strong>{entry.title}</strong>}
+                  {'href' in entry && typeof entry.href === 'string' ? <a href={entry.href}>{entry.title}</a> : <strong>{entry.title}</strong>}
                   {'detail' in entry && entry.detail && <span>{entry.detail}</span>}
                   {'abbreviation' in entry && entry.abbreviation && <span>{entry.abbreviation}</span>}
                 </li>

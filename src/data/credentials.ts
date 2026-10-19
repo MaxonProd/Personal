@@ -1,6 +1,7 @@
 import {
   academicCredentials,
   currentAppointments,
+  militaryService,
   professionalCertifications
 } from './cv';
 
@@ -45,9 +46,7 @@ export const credentialGroups = [
   { title: 'Professional memberships', entries: [] },
   {
     title: 'Service recognition',
-    entries: [
-      { title: 'Promotion recognition during Air Force service', href: '/public-service/' }
-    ]
+    entries: militaryService.recognition.map((title) => ({ title }))
   }
 ] as const;
 
