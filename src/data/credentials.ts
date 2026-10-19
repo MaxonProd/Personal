@@ -53,7 +53,12 @@ export const credentialGroups = [
 ] as const;
 
 export const heroCredentials = [
-  academicCredentials[0],
+  {
+    ...academicCredentials[0],
+    abbreviation: academicCredentials[0].status === 'Candidate'
+      ? `${academicCredentials[0].abbreviation}(c)`
+      : academicCredentials[0].abbreviation
+  },
   ...professionalCertifications
 ] as const;
 
