@@ -1,0 +1,50 @@
+---
+interface Props {
+  title: string;
+  youtubeId: string;
+  context: string;
+  teachingObjective: string;
+  textAlternative: string;
+  transcript?: string;
+  index: number;
+}
+
+const { title, youtubeId, context, teachingObjective, textAlternative, transcript, index } = Astro.props;
+const descriptionId = `video-description-${index}`;
+---
+
+<section class="video-clip" aria-labelledby={`video-title-${index}`}>
+  <p class="eyebrow">Lecture demonstration</p>
+  <h2 id={`video-title-${index}`}>{title}</h2>
+  <p class="video-context">{context}</p>
+  <div class="video-frame">
+    <iframe
+      src={`https://www.youtube-nocookie.com/embed/${youtubeId}?controls=1&rel=0`}
+      title={title}
+      loading="lazy"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      aria-describedby={descriptionId}
+    ></iframe>
+  </div>
+  <div class="video-description" id={descriptionId}>
+    <p><strong>Teaching objective:</strong> {teachingObjective}</p>
+    <p><strong>Accessible text alternative:</strong> {textAlternative}</p>
+    {transcript && <details><summary>Read the transcript</summary><p>{transcript}</p></details>}
+  </div>
+</section>
+
+<style>
+  .video-clip{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+  .video-clip .eyebrow{margin:0 0 .7rem;color:var(--bronze-dark);font-size:.7rem;font-weight:750;letter-spacing:.1em;text-transform:uppercase}
+  .video-clip h2{margin:0;font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.25rem);line-height:1.12}
+  .video-context{margin:.6rem 0 1rem;color:var(--ink-soft);font-size:.9rem}
+  .video-frame{width:100%;aspect-ratio:16/9;overflow:hidden;background:#101820}
+  .video-frame iframe{display:block;width:100%;height:100%;border:0}
+  .video-description{margin-top:1rem;padding:1rem 1.1rem;border-left:2px solid var(--bronze);background:var(--paper-soft);color:var(--ink-soft);font-size:.9rem}
+  .video-description p{margin:0}
+  .video-description p+p,.video-description details{margin-top:.7rem}
+  .video-description strong{color:var(--ink)}
+  .video-description summary{color:var(--ink);font-weight:700;cursor:pointer}
+</style>

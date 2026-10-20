@@ -14,6 +14,14 @@ const work = defineCollection({
     organization: z.string().optional(),
     externalUrl: z.string().url().optional(),
     downloadUrl: z.string().optional(),
+    videoClips: z.array(z.object({
+      title: z.string(),
+      youtubeId: z.string().regex(/^[A-Za-z0-9_-]{11}$/),
+      context: z.string(),
+      teachingObjective: z.string(),
+      textAlternative: z.string(),
+      transcript: z.string().optional()
+    })).default([]),
     citation: z.string().optional(),
     researchStatus: z.string().optional(),
     structuredDataType: z.enum(['Book', 'CreativeWork', 'Article', 'ScholarlyArticle']).optional(),

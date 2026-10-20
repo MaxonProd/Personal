@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../../components/Button.astro';
 import { getCollection, render } from 'astro:content';
 import { academicAppointments } from '../../data/credentials';
+import VideoClip from '../../components/VideoClip.astro';
 
 export async function getStaticPaths() {
   const items = await getCollection('work', ({ data }) => !data.draft);
@@ -62,7 +63,10 @@ const schema = {
         <div class="tags">{item.data.tags.map((tag) => <span>{tag}</span>)}</div>
         {item.data.citation && <p class="citation"><strong>Citation</strong><br />{item.data.citation}</p>}
       </aside>
-      <div class="prose"><Content /></div>
+      <div class="prose">
+        <Content />
+        {item.data.videoClips.map((clip, index) => <VideoClip {...clip} index={index} />)}
+      </div>
     </div>
   </article>
 </BaseLayout>
