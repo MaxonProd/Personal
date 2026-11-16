@@ -5,7 +5,7 @@ export const profile = {
     'Commercial leadership and initiatives at Impact Team K/IFMC',
     'Doctoral research on flexible work and multigenerational teams',
     'Business education at Newlane University and Sonoran Desert Institute',
-    'Maxon Products LLC and its operating ventures'
+    'Operating Maxon Products LLC, Citadel Wireless, and Fullrange Supply'
   ],
   location: 'Northern Michigan'
 } as const;

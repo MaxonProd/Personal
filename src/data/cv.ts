@@ -1,4 +1,5 @@
-export const cvLastUpdated = 'October 2026';
+export const cvLastUpdated = 'November 2026';
+export const cvLastUpdatedDate = '2026-11';
 
 export const academicInstitution = 'Edgewood University';
 export const academicInstitutionUrl = 'https://www.edgewood.edu/';

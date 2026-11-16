@@ -4,9 +4,9 @@ export const ventures = [
     mark: 'CW',
     logo: '/images/logos/citadel-wireless.png',
     industry: 'Telecommunications',
-    description: 'A proposed mobile virtual network operator in development, focused on practical service, resilient communications, and community-oriented access.',
+    description: 'A Michigan-based, veteran-owned SIM-only wireless provider welcoming early-access customers with monthly plans, bring-your-own-phone service, and direct support. Operated as a DBA of Maxon Products LLC.',
     website: 'https://citadelwireless.com',
-    status: 'In development',
+    status: 'Early access',
     tone: 'forest'
   },
   {
@@ -14,7 +14,7 @@ export const ventures = [
     mark: 'MP',
     logo: '/images/logos/maxon-products.png',
     industry: 'Business Development and Brand Management',
-    description: 'The parent operating and development entity, founded May 2019, creating and supporting practical businesses, products, and operating brands.',
+    description: 'Founded in May 2019, Maxon Products LLC develops, launches, and operates focused businesses from northern Michigan, building the brands, technology, and operating systems behind Citadel Wireless and Fullrange Supply.',
     website: 'https://maxonprod.com',
     status: 'Active',
     tone: 'bronze'
@@ -23,8 +23,8 @@ export const ventures = [
     name: 'Fullrange Supply',
     mark: 'FS',
     logo: '/images/logos/fullrange-supply.png',
-    industry: 'Outdoor and Field Supply',
-    description: 'An outdoor and shooting-sports supply business serving practical field, range, and recreational needs.',
+    industry: 'Outdoor and Shooting-Sports Supply',
+    description: 'A Michigan-based retailer offering outdoor gear, shooting-sports accessories, apparel, workwear, and practical equipment for the field, range, work, and everyday use. Operated by Maxon Products LLC.',
     website: 'https://fullrangesupply.com',
     status: 'Active',
     tone: 'blue'

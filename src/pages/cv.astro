@@ -1,6 +1,6 @@
 ---
 import ContentLayout from '../layouts/ContentLayout.astro';
-import { academicCredentials, additionalEducation, currentAppointments, cvLastUpdated, doctoralResearch, foreignQualifications, foreignQualificationsNote, internationalEducationLinks, militaryService, priorExperience, professionalCertifications } from '../data/cv';
+import { academicCredentials, additionalEducation, currentAppointments, cvLastUpdated, cvLastUpdatedDate, doctoralResearch, foreignQualifications, foreignQualificationsNote, internationalEducationLinks, militaryService, priorExperience, professionalCertifications } from '../data/cv';
 import { academicCvDocument } from '../data/professionalDocuments';
 import { professionalSchemaJobTitles } from '../data/credentials';
 import { ventures } from '../data/ventures';
@@ -28,7 +28,7 @@ const cvSchema = {
   <script type="application/ld+json" is:inline set:html={JSON.stringify(cvSchema)} />
 
   <div class="container cv-toolbar">
-    <p><span>Last updated</span><time datetime="2026-10">{cvLastUpdated}</time></p>
+    <p><span>Last updated</span><time datetime={cvLastUpdatedDate}>{cvLastUpdated}</time></p>
     {academicCvDocument.available && (
       <a class="button" href={academicCvDocument.href} type="application/pdf" target="_blank" rel="noopener noreferrer">
         Download CV / Résumé (PDF)
