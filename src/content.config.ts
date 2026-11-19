@@ -1,6 +1,11 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+const printEdition = z.object({
+  url: z.string().url().optional(),
+  isbn: z.string().optional()
+});
+
 const work = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/work' }),
   schema: z.object({
@@ -14,6 +19,21 @@ const work = defineCollection({
     organization: z.string().optional(),
     externalUrl: z.string().url().optional(),
     downloadUrl: z.string().optional(),
+    bookDetails: z.object({
+      subtitle: z.string(),
+      editor: z.string(),
+      credit: z.string(),
+      source: z.string(),
+      year: z.number().int(),
+      genre: z.string(),
+      pdfPages: z.number().int().positive(),
+      cover: z.object({
+        width: z.number().int().positive(),
+        height: z.number().int().positive()
+      }),
+      paperback: printEdition.optional(),
+      hardcover: printEdition.optional()
+    }).optional(),
     videoClips: z.array(z.object({
       title: z.string(),
       youtubeId: z.string().regex(/^[A-Za-z0-9_-]{11}$/),

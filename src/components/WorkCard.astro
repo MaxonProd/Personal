@@ -1,23 +1,15 @@
 ---
-interface Props {
-  slug: string;
-  title: string;
-  coverTitle?: string;
-  description: string;
-  summary?: string;
-  category: string;
-  date?: Date;
-  image?: string;
-  organization?: string;
-  featured?: boolean;
-}
+import type { CollectionEntry } from 'astro:content';
 
-const { slug, title, coverTitle, description, summary, category, date, image, organization, featured = false } = Astro.props;
+type Props = CollectionEntry<'work'>['data'] & { slug: string };
+
+const { slug, title, coverTitle, description, summary, category, date, image, organization, bookDetails, featured } = Astro.props;
+const year = bookDetails?.year ?? date?.getFullYear();
 ---
 
 <article class:list={['work-card', featured && 'featured']}>
-  <a class:list={['cover', image && 'cover--image']} href={`/work/${slug}/`} aria-label={`Read about ${title}`}>
-    {image ? <img src={image} alt={`Cover of ${title}`} loading="lazy" decoding="async" /> : (
+  <a class:list={['cover', image && 'cover--image', image && bookDetails && 'cover--edition']} href={`/work/${slug}/`} aria-label={`Read about ${title}`}>
+    {image ? <img src={image} alt={`Cover of ${title}`} width={bookDetails?.cover.width} height={bookDetails?.cover.height} loading="lazy" decoding="async" /> : (
       <>
         <span class="cover-kicker">{category}</span>
         <strong>{coverTitle ?? title}</strong>
@@ -27,9 +19,10 @@ const { slug, title, coverTitle, description, summary, category, date, image, or
     )}
   </a>
   <div class="work-copy">
-    <div class="meta"><span>{category}</span>{date && <time datetime={date.toISOString()}>{date.getFullYear()}</time>}</div>
+    <div class="meta"><span>{category}</span>{year && <time datetime={date?.toISOString() ?? String(year)}>{year}</time>}</div>
     <h3><a href={`/work/${slug}/`}>{title}</a></h3>
     <p>{summary ?? description}</p>
+    {bookDetails && <span class="organization">{bookDetails.credit}</span>}
     {organization && <span class="organization">{organization}</span>}
     <a class="text-link text-link--internal" href={`/work/${slug}/`}>View work</a>
   </div>
@@ -40,6 +33,8 @@ const { slug, title, coverTitle, description, summary, category, date, image, or
   .cover{min-width:0;aspect-ratio:3/4;display:flex;padding:1.4rem;flex-direction:column;color:#eef6f8;background:linear-gradient(155deg,#244c65,#152633);text-decoration:none;box-shadow:0 13px 30px rgba(24,35,45,.22)}
   .cover--image{padding:0;overflow:hidden;background:#152633}
   .cover img{width:100%;height:100%;object-fit:cover}
+  .cover--edition{aspect-ratio:auto;align-self:start}
+  .cover--edition img{display:block;height:auto}
   .cover-kicker{font-size:.61rem;letter-spacing:.12em;text-transform:uppercase}
   .cover strong{width:100%;min-width:0;margin:auto 0;font-family:var(--serif);font-size:clamp(1.25rem,2vw,1.8rem);font-weight:500;line-height:1;overflow-wrap:normal;word-break:normal;hyphens:manual}
   .cover-rule{width:42px;height:2px;margin-bottom:.8rem;background:#8cc7d3}

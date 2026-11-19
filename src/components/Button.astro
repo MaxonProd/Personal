@@ -3,12 +3,13 @@ interface Props {
   href: string;
   variant?: 'primary' | 'secondary' | 'ghost';
   external?: boolean;
+  download?: boolean;
 }
 
-const { href, variant = 'primary', external = false } = Astro.props;
+const { href, variant = 'primary', external = false, download = false } = Astro.props;
 ---
 
-<a class:list={['button', `button--${variant}`]} href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>
+<a class:list={['button', `button--${variant}`]} href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} download={download ? '' : undefined}>
   <slot />
   {external && <span class="sr-only"> (opens in a new tab)</span>}
 </a>

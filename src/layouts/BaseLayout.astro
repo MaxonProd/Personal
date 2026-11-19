@@ -6,7 +6,7 @@ import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
 import { profile } from '../data/profile';
 import { academicAppointments, academicInstitution, professionalSchemaJobTitles } from '../data/credentials';
-interface Props { title?: string; description?: string; image?: string; type?: 'website'|'article'|'book'; noindex?: boolean; canonicalPath?: string; }
+interface Props { title?: string; pageTitle?: string; description?: string; image?: string; type?: 'website'|'article'|'book'; noindex?: boolean; canonicalPath?: string; }
 const props = Astro.props;
 const personSchema={'@context':'https://schema.org','@type':'Person',name:profile.name,url:site.domain,jobTitle:professionalSchemaJobTitles,affiliation:academicAppointments.map((appointment)=>({'@type':'Organization',name:appointment.institution})),alumniOf:{'@type':'CollegeOrUniversity',name:academicInstitution},sameAs:['https://www.linkedin.com/in/timothymaxon/']};
 ---
