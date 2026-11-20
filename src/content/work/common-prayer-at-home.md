@@ -16,6 +16,12 @@ bookDetails:
   cover:
     width: 792
     height: 1224
+  paperback:
+    url: "https://www.amazon.com/dp/B0HSBW15T1?th=1"
+    isbn: "9798144156769"
+  hardcover:
+    url: "https://www.amazon.com/dp/B0HS8WBV9J?th=1"
+    isbn: "9798144167772"
 structuredDataType: "Book"
 featured: true
 draft: false
